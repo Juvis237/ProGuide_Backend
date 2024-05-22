@@ -89,11 +89,11 @@
 <body>
 
 <!-- Begin page -->
-<div id="wrapper">
+<div id="wrapper" class="w-100">
 
 
     <!-- Topbar Start -->
-    <div class="navbar-custom">
+    <div class="navbar-custom bg-white">
         <ul class="list-unstyled topnav-menu float-right mb-0">
 
             <livewire:admin.notifications />

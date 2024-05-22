@@ -90,25 +90,25 @@
 <body>
 
 <!-- Begin page -->
-<div id="wrapper">
+<div id="wrapper" class="w-100">
 
 
     <!-- Topbar Start -->
-    <div class="navbar-custom">
+    <div class="navbar-custom bg-white">
         <ul class="list-unstyled topnav-menu float-right mb-0">
 
             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('admin.notifications', [])->html();
-} elseif ($_instance->childHasBeenRendered('myBwQTY')) {
-    $componentId = $_instance->getRenderedChildComponentId('myBwQTY');
-    $componentTag = $_instance->getRenderedChildComponentTagName('myBwQTY');
+} elseif ($_instance->childHasBeenRendered('jw1BnUQ')) {
+    $componentId = $_instance->getRenderedChildComponentId('jw1BnUQ');
+    $componentTag = $_instance->getRenderedChildComponentTagName('jw1BnUQ');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('myBwQTY');
+    $_instance->preserveRenderedChild('jw1BnUQ');
 } else {
     $response = \Livewire\Livewire::mount('admin.notifications', []);
     $html = $response->html();
-    $_instance->logRenderedChild('myBwQTY', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('jw1BnUQ', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>

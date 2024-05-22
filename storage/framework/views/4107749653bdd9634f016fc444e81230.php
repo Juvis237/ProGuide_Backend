@@ -3,7 +3,7 @@
     <div class="row justify-content-between align-items-center">
         <div class="col-md-6 col-lg-8 d-flex justify-content-between align-items-center">
             <h3><?php echo e(__('admin.testimonial')); ?></h3>
-            <a href="#"  wire:click.prevent="$emitTo('testimonial.edit','load')" class="btn btn-primary text-white" wire:loading.attribute = 'disabled'>
+            <a href="#"  wire:click.prevent="$emitTo('admin.testimonial.edit','load')" class="btn btn-primary text-white" wire:loading.attribute = 'disabled'>
                 <i class="fa fa-spinner d-none" wire:loading.class.remove="d-none"   wire:target="load"></i>
                 <?php echo e(__('edits.add_testimonial')); ?>
 
@@ -35,8 +35,8 @@
                     <td><?php echo e($testimonial->name); ?></td>
                     <td><?php echo e($testimonial->company); ?></td>
                     <td>
-                        <a href="#" wire:click.prevent="$emitTo('testimonial.edit','load',<?php echo e($testimonial); ?>)" class="btn btn-default text-primary"><i class="fa fa-pen"></i> <?php echo e(__('edits.edit')); ?></a>
-                        <a href="#" wire:click.prevent="$emitTo('testimonial.delete','load',<?php echo e($testimonial); ?>)" class="btn btn-default text-danger"><i class="fa fa-trash"></i> <?php echo e(__('edits.delete')); ?></a>
+                        <a href="#" wire:click.prevent="$emitTo('admin.testimonial.edit','load',<?php echo e($testimonial); ?>)" class="btn btn-default text-primary"><i class="fa fa-pen"></i> <?php echo e(__('edits.edit')); ?></a>
+                        <a href="#" wire:click.prevent="$emitTo('admin.testimonial.delete','load',<?php echo e($testimonial); ?>)" class="btn btn-default text-danger"><i class="fa fa-trash"></i> <?php echo e(__('edits.delete')); ?></a>
                     </td>
                 </tr>
 
@@ -61,14 +61,14 @@
 
     <?php
 if (! isset($_instance)) {
-    $html = \Livewire\Livewire::mount('testimonial.edit', [])->html();
+    $html = \Livewire\Livewire::mount('admin.testimonial.edit', [])->html();
 } elseif ($_instance->childHasBeenRendered('l2614545181-0')) {
     $componentId = $_instance->getRenderedChildComponentId('l2614545181-0');
     $componentTag = $_instance->getRenderedChildComponentTagName('l2614545181-0');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
     $_instance->preserveRenderedChild('l2614545181-0');
 } else {
-    $response = \Livewire\Livewire::mount('testimonial.edit', []);
+    $response = \Livewire\Livewire::mount('admin.testimonial.edit', []);
     $html = $response->html();
     $_instance->logRenderedChild('l2614545181-0', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
@@ -77,14 +77,14 @@ echo $html;
 
     <?php
 if (! isset($_instance)) {
-    $html = \Livewire\Livewire::mount('testimonial.delete', [])->html();
+    $html = \Livewire\Livewire::mount('admin.testimonial.delete', [])->html();
 } elseif ($_instance->childHasBeenRendered('l2614545181-1')) {
     $componentId = $_instance->getRenderedChildComponentId('l2614545181-1');
     $componentTag = $_instance->getRenderedChildComponentTagName('l2614545181-1');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
     $_instance->preserveRenderedChild('l2614545181-1');
 } else {
-    $response = \Livewire\Livewire::mount('testimonial.delete', []);
+    $response = \Livewire\Livewire::mount('admin.testimonial.delete', []);
     $html = $response->html();
     $_instance->logRenderedChild('l2614545181-1', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
