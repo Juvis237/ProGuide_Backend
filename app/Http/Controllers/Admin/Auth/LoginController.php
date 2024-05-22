@@ -36,7 +36,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if (auth()->guard()->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->route('admin.home');
+            return redirect()->route('home');
         }
 
         return $this->sendFailedLoginResponse($request);
