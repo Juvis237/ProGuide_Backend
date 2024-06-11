@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('delivrables', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('school_id');
             $table->string('name');
-            $table->string('mode')->nullable();
             $table->integer('price')->nullable();
+            $table->string('duration')->nullable();;
             $table->timestamps();
+
+            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
         });
     }
 

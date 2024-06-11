@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('title');
-            $table->text('description');
+            $table->foreignId('delivrable_id');
+            $table->foreignId('mode_id')->nullable();
             $table->foreignId('assigned_to')->nullable();
             $table->dateTime('date')->nullable();
             $table->integer('rating')->nullable();
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('assigned_to')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('delivrable_id')->references('id')->on('delivrables')->onDelete('CASCADE');
+            $table->foreign('mode_id')->references('id')->on('delivrable_modes')->onDelete('CASCADE');
         });
     }
 

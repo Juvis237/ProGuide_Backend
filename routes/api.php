@@ -27,6 +27,7 @@ use App\Http\Controllers\API\UserVerificationController;
 Route::group(['namespace' => 'API'], function () {
     // login user
     Route::post('login', [AuthController::class, "login"]);
+    Route::post('agent/login', [AuthController::class, "agentLogin"]);
     // register user
 
     Route::post('register', [AuthController::class, "register"]);
@@ -47,6 +48,9 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('resend_verification_code', [UserVerificationController::class, "resendVerificationCode"]);
         Route::post('verify_code', [UserVerificationController::class, "verifyCode"]);
         Route::post('rate_request', [RequestController::class, "rateRequest"]);
+        Route::get('schools', [RequestController::class, "getSchools"]);
+        Route::get('modes', [RequestController::class, "getModes"]);
+        Route::get('delivrables', [RequestController::class, "getDelivrables"]);
     });
 
 

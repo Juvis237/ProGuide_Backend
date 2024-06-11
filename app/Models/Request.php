@@ -11,13 +11,8 @@ class Request extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'title',
-        'description',
-        'service_id',
-        'status',
-        'skills',
-        'date'
+        'user_id', 'delivrable_id', 'mode_id', 'status', 'assigned_to', 'date', 'rating', 'comment', 
+
     ];
 
 
@@ -43,6 +38,15 @@ class Request extends Model
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function Delivrable(){
+        return $this->belongsTo(Delivrable::class, 'delivrable_id');
+    }
+    public function mode(){
+        return $this->belongsTo(DelivrableMode::class,'mode_id');
+    }
+    public function assignedTo(){
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 
 }

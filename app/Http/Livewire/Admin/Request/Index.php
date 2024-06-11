@@ -1,31 +1,25 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Faq;
+namespace App\Http\Livewire\Admin\Request;
 
 use App\Http\Livewire\DataTable\DataTable;
-use App\Models\FAQ;
-use App\Models\UserRequest;
-use Illuminate\Http\Request;
+use App\Models\Request;
 use Livewire\Component;
 
 class Index extends Component
 {
     use DataTable;
 
-    public function render()
-    {
-        return view('livewire.admin.faq.index',['faqs'=>$this->rows]);
-    }
 
     protected $listeners = [
-        'faqCreated'=>'$refresh',
-        'faqDeleted'=>'$refresh',
+        'Created'=>'$refresh',
+        'Deleted'=>'$refresh',
     ];
 
 
     protected function getBaseQuery()
     {
-        return FAQ::query()->select('faqs.*');
+        return Request::query()->select('requests.*');
     }
 
     public function resetFilters()
@@ -60,5 +54,21 @@ class Index extends Component
         }
 
         return $query->where('name', 'like', "%$value%");
+    }
+    public function filterStatus($query, $value){
+        if (strlen($value) === 0) {
+            return $query;
+        }
+        if($value == 'not_assigned'){
+            return $query->where('assigned_to', null);
+        }else{
+            return $query->where('assigned_to', '!=' , null);
+        }
+
+        return $query->where('status', 'like', "%$value%");
+    }
+    public function render()
+    {
+        return view('livewire.admin.request.index',['requests'=>$this->rows]);
     }
 }

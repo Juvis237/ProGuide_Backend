@@ -1,31 +1,26 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Faq;
+namespace App\Http\Livewire\Admin\School;
 
 use App\Http\Livewire\DataTable\DataTable;
-use App\Models\FAQ;
-use App\Models\UserRequest;
-use Illuminate\Http\Request;
+use App\Models\School;
 use Livewire\Component;
+use Illuminate\Http\Request;
 
 class Index extends Component
 {
     use DataTable;
 
-    public function render()
-    {
-        return view('livewire.admin.faq.index',['faqs'=>$this->rows]);
-    }
 
     protected $listeners = [
-        'faqCreated'=>'$refresh',
-        'faqDeleted'=>'$refresh',
+        'schoolCreated'=>'$refresh',
+        'schoolDeleted'=>'$refresh',
     ];
 
 
     protected function getBaseQuery()
     {
-        return FAQ::query()->select('faqs.*');
+        return School::query()->select('schools.*');
     }
 
     public function resetFilters()
@@ -60,5 +55,9 @@ class Index extends Component
         }
 
         return $query->where('name', 'like', "%$value%");
+    }
+    public function render()
+    {
+        return view('livewire.admin.school.index',['schools'=>$this->rows]);
     }
 }

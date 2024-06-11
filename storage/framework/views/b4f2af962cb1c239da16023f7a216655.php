@@ -100,15 +100,15 @@
             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('admin.notifications', [])->html();
-} elseif ($_instance->childHasBeenRendered('jw1BnUQ')) {
-    $componentId = $_instance->getRenderedChildComponentId('jw1BnUQ');
-    $componentTag = $_instance->getRenderedChildComponentTagName('jw1BnUQ');
+} elseif ($_instance->childHasBeenRendered('lC4QtNw')) {
+    $componentId = $_instance->getRenderedChildComponentId('lC4QtNw');
+    $componentTag = $_instance->getRenderedChildComponentTagName('lC4QtNw');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('jw1BnUQ');
+    $_instance->preserveRenderedChild('lC4QtNw');
 } else {
     $response = \Livewire\Livewire::mount('admin.notifications', []);
     $html = $response->html();
-    $_instance->logRenderedChild('jw1BnUQ', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('lC4QtNw', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -190,6 +190,18 @@ echo $html;
                     <a href="<?php echo e(route('home')); ?>">
                         <i class="fa fa-home"></i>
                         <span> Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('admin.schools')); ?>">
+                        <i class="fa fa-home"></i>
+                        <span> Schools</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('requests')); ?>">
+                        <i class="fa fa-home"></i>
+                        <span> Requests</span>
                     </a>
                 </li>
 

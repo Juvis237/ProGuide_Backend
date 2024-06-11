@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class School extends Model
+class DelivrableMode extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'price',
+        'duration',
+        'delivrable_id'
     ];
-
-    public function delivrables() {
-
-        return $this->hasMany(Delivrable::class,'school_id');
-    }
 }

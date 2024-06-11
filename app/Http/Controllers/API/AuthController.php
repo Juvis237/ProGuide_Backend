@@ -70,6 +70,60 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * Agent Login
+     * Endpoint to login a user
+     * 
+     * @queryParam email required  User email
+     * @queryParam password required  User Password
+     *@request /agent/login?email=email&password=PASSWORD
+     *@method POST
+
+     */
+    public function agentLogin(Request $request)
+    {
+
+        $validated = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required|min:6'
+        ]);
+
+        if ($validated->fails()) {
+            return response(['success'=>false,'message' => $validated->errors()->first()]);
+        }
+
+        if (!(auth()->attempt($request->all()))) {
+            return response([
+                'message' => "User email number or password not correct",
+                "success" => false,
+            ]);
+
+        }
+
+        $user = User::where(['email' => $request->email])->first();
+
+        Auth::guard('api')->check($user);
+
+        if (isset($user) && Hash::check($request->password, $user->password) && $user->isAgent()) {
+            $token = $user->createToken('authToken')->accessToken;
+
+            if ($token) {
+                return response([
+                    "message" => "User authentication successful",
+                    'success' => true,
+                    'user' => \App\Http\Resources\UserResource::make($user),
+                    'token' => $token,
+                ], 200);
+            } else {
+                return response([
+                    'message' => "Server error,Please try again",
+                    "success" => false
+                ]);
+            }
+        }
+
+    }
+
 
 
     /**
@@ -94,6 +148,7 @@ class AuthController extends Controller
             "phone" => "nullable",
             "password" => 'required',
             "user_name"=> "required",
+            "role" => "required",
         ]);
 
         if ($validated->fails()) {
@@ -117,6 +172,7 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'email' => $request->email,
+            'role' => $request->role
             ]);
 
         Auth::guard('api')->check($user);

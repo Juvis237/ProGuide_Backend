@@ -177,6 +177,18 @@
                         <span> Dashboard</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{route('admin.schools')}}">
+                        <i class="fa fa-home"></i>
+                        <span> Schools</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('requests')}}">
+                        <i class="fa fa-home"></i>
+                        <span> Requests</span>
+                    </a>
+                </li>
 
              
                     <li>
