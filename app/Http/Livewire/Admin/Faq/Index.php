@@ -59,6 +59,6 @@ class Index extends Component
             return $query;
         }
 
-        return $query;
+        return $query->where('name', 'like', "%$value%");
     }
 }

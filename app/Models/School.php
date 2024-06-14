@@ -12,4 +12,9 @@ class School extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function delivrables() {
+
+        return $this->hasMany(Delivrable::class,'school_id');
+    }
 }

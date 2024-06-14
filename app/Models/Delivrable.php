@@ -9,5 +9,14 @@ class Delivrable extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','mode','price'];
+    protected $fillable = ['school_id','name','price', 'duration'];
+
+    public function school() {
+
+        return $this->belongsTo(School::class,'school_id');
+    }
+
+    public function modes(){
+        return $this->hasMany(DelivrableMode::class,'delivrable_id');
+    }
 }

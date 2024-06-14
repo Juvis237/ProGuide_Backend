@@ -75,8 +75,12 @@ class User extends Authenticatable
 
 
     public function isAdmin(){
-        return $this->admin === 1;
+        return $this->role === 'admin';
     }
+    public function isAgent(){
+        return $this->role === 'agent';
+    }
+
 
     public function getProfilePictureAttribute(){
         return asset('storage/'.$this->profile);

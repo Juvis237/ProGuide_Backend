@@ -17,17 +17,13 @@ class RequestResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
+            'duration' => $this->date,
             'status' => $this->status,
             'user'=>UserResource::make($this->user),
-            'skills' => json_decode($this->skills),
+            'delivrable' => DelivrableResource::make($this->delivrable),
+            'mode'=>ModeResource::make($this->mode),
             'service' => ServiceResource::collection(isset($this->service_id)? UserService::find($this->service_id): []),
-            'images' => $this->images->count()?ImageResource::collection($this->images):[[
-                'id'=> 0,
-                'url' => asset('be_assets/images/log.jpeg')
-            ]],
-            'date' => $this->date->format('l d, M Y'),
+            'date' => $this->created_at->format('l d, M Y'),
             'time' => $this->date->format('h:i'),
         ];
     }

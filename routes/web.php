@@ -37,10 +37,12 @@ Route::group(['prefix' => 'admin',], function () {
         Route::get('/update-profile',  [\App\Http\Livewire\Admin\UpdateProfile::class, '__invoke'])->name('update-profile');
         Route::get('/edit-user',  [\App\Http\Livewire\Admin\Users\Edit::class, '__invoke'])->name('edit.user');
         Route::get('/users/{user}',  [\App\Http\Livewire\Admin\Users\Detail::class, '__invoke'])->name('user.detail');
-        Route::get('/requests',  [\App\Http\Livewire\Admin\Requests\Index::class, '__invoke'])->name('requests');
-        Route::get('/requests/{request}',  [\App\Http\Livewire\Admin\Requests\Detail::class, '__invoke'])->name('requests.detail');
+        Route::get('/requests',  [\App\Http\Livewire\Admin\Request\Index::class, '__invoke'])->name('requests');
         Route::get('/users',  [\App\Http\Livewire\Admin\Users\Index::class, '__invoke'])->name('index.user');
         Route::get('/dashboard',  [\App\Http\Livewire\Admin\Dashboard::class, '__invoke'])->name('admin.dashboard');
+        Route::get('/schools',  [\App\Http\Livewire\Admin\School\Index::class, '__invoke'])->name('admin.schools');
+        Route::get('/schools/{school}',  [\App\Http\Livewire\Admin\School\Details::class, '__invoke'])->name('admin.school.details');
+        Route::get('/school/delivrable/{delivrable}',  [\App\Http\Livewire\Admin\School\Delivrable\Details::class, '__invoke'])->name('admin.delivrable.details');
 
 
             Route::get('/categories', [\App\Http\Livewire\Admin\Categories\Index::class, '__invoke'])->name('categories');

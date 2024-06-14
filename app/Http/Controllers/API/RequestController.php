@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DelivrableResource;
+use App\Http\Resources\ModeResource;
 use App\Http\Resources\RequestResource;
+use App\Http\Resources\SchoolResource;
 use App\Http\Resources\UserResource;
+use App\Models\Delivrable;
 use App\Models\User;
 use App\Notifications\StatusUpdated;
 use Illuminate\Http\Request;
@@ -12,28 +16,86 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Request as UserRequest;
+use App\Models\School;
 
 class RequestController extends Controller
 {
-    public $user;
+    public User $user;
 
     public function __construct(){
         $this->user = Auth::guard('api')->user();
     }
 
+
+    /**
+     * GET SCHOOLS
+     * Endpoint to get  all the schools available.
+     *@request /schools
+     *@method GET
+
+     */
+
+     public function getSchools(Request $request)
+     { 
+         return response([
+             'success' => true,
+             'schools' => SchoolResource::collection(School::all()),
+         ]);
+     }
+
+    /**
+     * GET DELIVRABLES
+     * Endpoint to get  all the Delivrables of a particular school.
+     * @queryParam school_id required  Delivrable School,
+    *@request /delivrables?school_id=SCHOOL_ID
+     *@method GET
+
+     */
+
+     public function getDelivrables(Request $request)
+     { 
+         return response([
+             'success' => true,
+             'delivrables' => DelivrableResource::collection(School::find($request->school_id)->delivrables),
+         ]);
+     }
+
+    /**
+     * GET DELIVRABLES
+     * Endpoint to get  all the Modes of a particular Delivrable.
+     * @queryParam delivrable_id required  Delivrable Modes,
+     *@request /modes?delivrable_id=DELIVRABLE
+     *@method GET
+
+     */
+
+     public function getModes(Request $request)
+     { 
+         return response([
+             'success' => true,
+             'modes' => ModeResource::collection(Delivrable::find($request->delivrable_id)->modes),
+         ]);
+     }
+
     /**
      * GET REQUESTS
      * Endpoint to get  all requests sent by the current logged in user.
-     *
-     *@request /requests
+     * You can filter by status
+     *  @queryParam status nullable  Request Status,
+     *@request /requests?status=STATUS
      *@method GET
 
      */
 
     public function getRequests(Request $request)
     {
-        $req = $this->user->requests();
-        if ($request->status != "all") {
+        if($this->user->isAgent()){
+            $req = UserRequest::where('assigned_to', $this->user->id);
+        }else {
+            $req = $this->user->requests();
+        }
+        
+        if ($request->status) {
             $req = $req->whereStatus($request->status);
         }
 
@@ -47,21 +109,18 @@ class RequestController extends Controller
      * ADD REQUEST
      * Endpoint to create a new request for a user
      *
-     * @queryParam title required  Request Title
-     * @queryParam description required  Request Description
+     * @queryParam delivrable_id required  Request Title
+     * @queryParam mode_id nullable  Request Description
      * @queryParam date date|after:now  Requests Desired Date Of Completion
-     * @queryParam images nullable  Request's Array of Images
      *@request /requests/add_request?title=TITLE&description=DESCRIPTION
      *@method POST
 
      */
     public function addRequest(Request $request){
         $validated = Validator::make($request->all(), [
-            "title" => 'required',
-            "description" => "required",
+            "delivrable_id" => 'required',
+            "mode_id" => "nullable",
             "date" => "date|after:now",
-            "service_id" => "nullable",
-            "skills" => "required",
         ]);
 
         if ($validated->fails()) {
@@ -73,21 +132,12 @@ class RequestController extends Controller
 
         $req = \App\Models\Request::create([
             'user_id' => $this->user->id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'service_id' => $request->service_id,
-            'skills' => $request->skills,
+            'delivrable_id' => $request->delivrable_id,
+            'mode_id' => $request->mode_id,
             'date' => $request->date,
-            'status' => \App\Models\Request::STATUS_DRAFT,
+            'status' => \App\Models\Request::STATUS_PENDING,
         ]);
 
-        for ($i = 0; $i < $request->images_count; $i++) {
-            $req->images()->create(
-                [
-                    'image_path' => $request->file('image_' . $i)->store('images'),
-                ]
-            );
-        }
 
         return response([
             'success' => true,
@@ -99,21 +149,18 @@ class RequestController extends Controller
     /**
      * Update REQUEST
      * Endpoint to update a request from a user
-     *
-     * @queryParam request_id required  Request ID
-     * @queryParam title nullable  Request Title
-     * @queryParam description nullable  Request Description
-     * @queryParam date date|after:now  Requests Desired Date Of Completion
-     * @queryParam images nullable  Request's Array of Images
-     *@request /requests/update_request?request_id=REQUESTID&title=TITLE&description=DESCRIPTION
+     * 
+     * @queryParam request_id required  RequestID
+     * @queryParam delivrable_id nullable  Delivrable ID
+     * @queryParam mode_id nullable  Mode ID
+     * @queryParam date date|after:now nullable  Requests Desired Date Of Completion
+     *@request /requests/update_request?request_id=REQUESTID&delivrable_id=ID&mode_id=MODE
      *@method POST
 
      */
     public function updateRequest(Request $request){
         $validated = Validator::make($request->all(),[
             "request_id" => 'required',
-            "date" => "date|after:now",
-
         ]);
 
         if ($validated->fails()) {
@@ -131,20 +178,11 @@ class RequestController extends Controller
         }
 
         $req->update([
-            'title' => isset($request->title)? $request->title : $req->title,
-            'description' => isset($request->description)? $request->description : $req->description,
+            'delivrable_id' => isset($request->delivrable_id)? $request->delivrable_id : $req->delivrable_id,
+            'mode_id' => isset($request->mode_id)? $request->mode_id : $req->mode_id,
             'date' => isset($request->date)? $request->date : $req->date,
         ]);
 
-        if(isset($request->images)){
-            foreach($request->images as $image){
-                $req->images()->create(
-                    [
-                        'image_path' => $image->store('images'),
-                    ]
-                    );
-            }
-        }
 
         return response([
             'success' => true,
@@ -169,7 +207,7 @@ class RequestController extends Controller
 
         if (in_array($req->status, \App\Models\Request::STATUS)) {
             $req->update([
-                'status' => "pending"
+                'status' => $request->status
             ]);
 
             $admins = User::where('admin', '1')->get();
@@ -216,15 +254,6 @@ class RequestController extends Controller
                 'message' => 'The request status does not permit deletion'
             ]);
         }
-
-        foreach ($req->images as $image) {
-            try {
-                unlink('storage/' . $image->image_path);
-                $image->delete();
-            } catch (\Throwable $th) {
-                //throw $th;
-            }
-        }
         $req->delete();
         $reqs = $this->user->requests;
         return response([
@@ -246,15 +275,25 @@ class RequestController extends Controller
         return response([ 'success' => true,'data'=>$request->all(), 'result' => \App\Http\Resources\ProfessionalResource::collection($users)], 200);
     }
 
+        /**
+     * DELETE REQUEST
+     * Endpoint to delete a users request
+     *
+     * @queryParam request_id required  Request ID
+     * @queryParam rating required  Request Rating
+     * @queryParam comment nullable  Request Comment ID
+     * @request /rate_request?request_id=REQUESTID&rating=REQUESTID&comment=REQUEST
+     * @method POST
+     */
     public function rateRequest(Request $request) {
-        $user = Auth::guard('api')->user();
+       
         $user_request = UserRequest::findOrFail((int)$request->input('id'));
 
         $user_request->rating = (int)$request->input('rating');
         $user_request->comment = $request->input('comment');
 
         $user_request->save();
-        $requests = $user->requests();
+        $requests = $this->user->requests();
         return response()->json(['requests' => RequestResource::collection($requests->get()), 'status' => 200]);
     }
 }

@@ -89,11 +89,11 @@
 <body>
 
 <!-- Begin page -->
-<div id="wrapper">
+<div id="wrapper" class="w-100">
 
 
     <!-- Topbar Start -->
-    <div class="navbar-custom">
+    <div class="navbar-custom bg-white">
         <ul class="list-unstyled topnav-menu float-right mb-0">
 
             <livewire:admin.notifications />
@@ -175,6 +175,18 @@
                     <a href="{{route('home')}}">
                         <i class="fa fa-home"></i>
                         <span> Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.schools')}}">
+                        <i class="fa fa-home"></i>
+                        <span> Schools</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('requests')}}">
+                        <i class="fa fa-home"></i>
+                        <span> Requests</span>
                     </a>
                 </li>
 
