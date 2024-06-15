@@ -90,25 +90,25 @@
 <body>
 
 <!-- Begin page -->
-<div id="wrapper">
+<div id="wrapper" class="w-100">
 
 
     <!-- Topbar Start -->
-    <div class="navbar-custom">
+    <div class="navbar-custom bg-white">
         <ul class="list-unstyled topnav-menu float-right mb-0">
 
             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('admin.notifications', [])->html();
-} elseif ($_instance->childHasBeenRendered('5dp9H5D')) {
-    $componentId = $_instance->getRenderedChildComponentId('5dp9H5D');
-    $componentTag = $_instance->getRenderedChildComponentTagName('5dp9H5D');
+} elseif ($_instance->childHasBeenRendered('Xjfgjbd')) {
+    $componentId = $_instance->getRenderedChildComponentId('Xjfgjbd');
+    $componentTag = $_instance->getRenderedChildComponentTagName('Xjfgjbd');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('5dp9H5D');
+    $_instance->preserveRenderedChild('Xjfgjbd');
 } else {
     $response = \Livewire\Livewire::mount('admin.notifications', []);
     $html = $response->html();
-    $_instance->logRenderedChild('5dp9H5D', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('Xjfgjbd', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -190,6 +190,18 @@ echo $html;
                     <a href="<?php echo e(route('home')); ?>">
                         <i class="fa fa-home"></i>
                         <span> Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('admin.schools')); ?>">
+                        <i class="fa fa-home"></i>
+                        <span> Schools</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('requests')); ?>">
+                        <i class="fa fa-home"></i>
+                        <span> Requests</span>
                     </a>
                 </li>
 
