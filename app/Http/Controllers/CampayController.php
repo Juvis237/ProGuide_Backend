@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use App\Models\Payment; 
+use Illuminate\Support\Facades\Auth;
 
 class CampayController extends Controller
 {
@@ -52,7 +54,22 @@ class CampayController extends Controller
             "headers" => $this->headers
         ]);
 
-        return $response->getBody()->getContents();
+        $responseData = json_decode($response->getBody()->getContents(), true);
+
+        // Extract the reference from the response
+        $reference = $responseData['reference'] ?? null;
+        $operator = $responseData['operator'] ?? null;
+
+        // Log the payment details in the payments table
+        $payment = new Payment();
+        $payment->user_id = $request->user_id; //Auth::id();
+        $payment->amount = $data['amount'];
+        $payment->description = "Reference: $reference";
+        $payment->transaction_id = $reference;
+        $payment->payment_method = "Method: $operator";
+        $payment->save();
+
+        return $responseData;
     }
 
     public function getTransactionStatus($reference)

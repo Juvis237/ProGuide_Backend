@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\UserVerificationController;
+use App\Http\Controllers\CampayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +71,10 @@ Route::group(['namespace' => 'API'], function () {
             Route::get('change_password', [EditProfileController::class, 'changePassword']);
             Route::post('save_profile_image', [EditProfileController::class, 'saveProfileImage']);
         });
-
+        
+        // Campay routes requiring authentication
+        Route::post('collect', [CampayController::class, 'collect']);
+        Route::get('transaction/{reference}', [CampayController::class, 'getTransactionStatus']);
 
     });
 });
