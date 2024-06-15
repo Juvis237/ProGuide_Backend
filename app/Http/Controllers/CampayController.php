@@ -64,9 +64,9 @@ class CampayController extends Controller
         $payment = new Payment();
         $payment->user_id = $request->user_id; //Auth::id();
         $payment->amount = $data['amount'];
-        $payment->description = "Reference: $reference";
+        $payment->description = $request->request_id;
         $payment->transaction_id = $reference;
-        $payment->payment_method = "Method: $operator";
+        $payment->payment_method = $operator;
         $payment->save();
 
         return $responseData;
