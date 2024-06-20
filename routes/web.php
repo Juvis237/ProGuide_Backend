@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\CampayController;
+use Nette\Utils\Html;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::get('/commands', function(){
     Artisan::call('config:cache');
 
 });
+
 
 Route::group(['prefix' => 'admin',], function () {
     Route::get('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');

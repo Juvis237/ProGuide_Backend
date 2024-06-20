@@ -33,9 +33,9 @@
 
 <?php if($tryItOut['enabled'] ?? true): ?>
     <script>
-        var tryItOutBaseUrl = "<?php echo e($tryItOut['base_url'] ?? config('app.url')); ?>";
-        var useCsrf = Boolean(<?php echo e($tryItOut['use_csrf'] ?? null); ?>);
-        var csrfUrl = "<?php echo e($tryItOut['csrf_url'] ?? null); ?>";
+        var tryItOutBaseUrl = "<?php echo $tryItOut['base_url'] ?? config('app.url'); ?>";
+        var useCsrf = Boolean(<?php echo $tryItOut['use_csrf'] ?? null; ?>);
+        var csrfUrl = "<?php echo $tryItOut['csrf_url'] ?? null; ?>";
     </script>
     <script src="<?php echo e(u::getVersionedAsset($assetPathPrefix.'js/tryitout.js')); ?>"></script>
 <?php endif; ?>
