@@ -6,6 +6,7 @@ use App\Http\Controllers\VoiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\CampayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,14 @@ Route::group(['prefix' => 'admin',], function () {
 });
 
 
+Route::group(['prefix' => 'campay'], function () {
+    Route::post('/collect', [CampayController::class, 'collect']);
+    Route::get('/transaction-status/{reference}', [CampayController::class, 'getTransactionStatus']);
+    Route::post('/withdraw', [CampayController::class, 'withdraw']);
+    Route::get('/balance', [CampayController::class, 'getAppBalance']);
+    Route::post('/transaction-history', [CampayController::class, 'transactionHistory']);
+    Route::post('/generate-payment-url', [CampayController::class, 'generatePaymentUrl']);
+});
 
 
 

@@ -20,3 +20,4 @@ yarn-error.log
 /.scribe
 /.vscode
 /.scribe
+.venv
