@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('profile')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('referal_code')->nullable();
+            $table->string('refered_by')->nullable();
             $table->text('bio')->nullable();
             $table->rememberToken();
             $table->timestamps();

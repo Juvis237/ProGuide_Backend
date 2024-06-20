@@ -124,6 +124,11 @@ class AuthController extends Controller
 
     }
 
+    public function generate()
+    {
+        $data = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz!"$%&//(()=?+';
+        return substr(str_shuffle($data), 0, 8);
+    }
 
 
     /**
@@ -149,6 +154,7 @@ class AuthController extends Controller
             "password" => 'required',
             "user_name"=> "required",
             "role" => "required",
+            "referal_code" => "nullable",
         ]);
 
         if ($validated->fails()) {
@@ -172,7 +178,9 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'email' => $request->email,
-            'role' => $request->role
+            'role' => $request->role,
+            'referal_code' => $this->generate(),
+            'refered_by' => User::where('referal_code', $request->referal_code)->first()?->id
             ]);
 
         Auth::guard('api')->check($user);
