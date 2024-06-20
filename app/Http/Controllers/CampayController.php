@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
-use App\Models\Payment; 
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class CampayController extends Controller
@@ -13,9 +14,11 @@ class CampayController extends Controller
     private string $token;
     private array $headers;
     private Client $client;
+    public User $user;
 
     public function __construct($base_url = "https://demo.campay.net/api/")
     {
+        $this->user = Auth::guard('api')->user();
         $this->client = new Client([
             'base_uri' => $base_url,
             'timeout' => 30 // 30 sec timeout
@@ -62,7 +65,8 @@ class CampayController extends Controller
 
         // Log the payment details in the payments table
         $payment = new Payment();
-        $payment->user_id = $request->user_id; //Auth::id();
+        $payment->request_id = $request->request_id;
+        $payment->user_id = $this->user->id; //Auth::id();
         $payment->amount = $data['amount'];
         $payment->description = $request->request_id;
         $payment->transaction_id = $reference;

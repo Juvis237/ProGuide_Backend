@@ -9,7 +9,7 @@
     >
         <div class="modal-inner">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">{{$isEditMode? 'Edit School': 'Add School'}}</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Assign Request</h5>
             </div>
             <div class="modal-body row">
                 <div class=" form-group col-12">
