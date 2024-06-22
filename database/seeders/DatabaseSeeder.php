@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Constant;
+use App\Models\Delivrable;
+use App\Models\DelivrableMode;
 use App\Models\Page;
+use App\Models\School;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -139,6 +143,53 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'password' => Hash::make("password"),
         ]);
+        User::create([
+            'user_name' => "user",
+            'phone' => "1234567",
+            'email' => 'user@gmail.com',
+            'role' => 'normal',
+            'password' => Hash::make("12345678"),
+        ]);
+
+        School::create([
+            'name' => "University of Buea",
+        ]);
+
+        Delivrable::create([
+            'name' => "Transcript",
+            'school_id' => 1,
+            'price' => 1000,
+            'duration' => 14
+        ]);
+
+        DelivrableMode::create([
+            'name' => "Fast",
+            'delivrable_id' =>1,
+            'price' => 2000,
+            'duration' => 7
+        ]);
+        DelivrableMode::create([
+            'name' => "SuperFast",
+            'delivrable_id' =>1,
+            'price' => 3000,
+            'duration' => 2
+        ]);
+
+        Constant::create([
+            'name' => "Referal Price",
+            'value' => "100",
+        ]);
+
+        Constant::create([
+            'name' => "Minimum Withdraw",
+            'value' => "1000",
+        ]);
+
+        Constant::create([
+            'name' => "Maximum Withdraw",
+            'value' => "10000",
+        ]);
+
 
         $this->call(LocationSeerder::class);
 

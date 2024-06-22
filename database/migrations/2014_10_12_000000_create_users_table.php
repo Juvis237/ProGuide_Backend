@@ -15,10 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('user_name')->nullable();
             $table->string('first_name')->nullable();
+            $table->string('email')->unique();
+            $table->string('matricule')->nullable();
+            $table->string('school')->nullable();
+            $table->string('faculty')->nullable();
+            $table->string('department')->nullable();
+            $table->string('level')->nullable();
             $table->string('last_name')->nullable();
             $table->enum('role', ['admin', 'agent', 'normal'])->default('normal');
             $table->string('phone')->nullable();
-            $table->string('email')->unique();
             $table->string('address')->nullable();
             $table->foreignId('city_id')->nullable();
             $table->foreignId('region_id')->nullable();

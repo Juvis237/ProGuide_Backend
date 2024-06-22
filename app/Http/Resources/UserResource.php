@@ -24,12 +24,11 @@ class UserResource extends JsonResource
             'role' => $this->role ?? "",
             'company' => $this->company ?? "",
             'address' => $this->address ?? "",
-            'city' => $this->city ? $this->city->name : '',
-            'region' => $this->region ? $this->region->name : '',
-            'city_id' => $this->city_id ,
-            'region_id' => $this->region_id ,
-            'website' => $this->website ?? '',
-            'bio' => $this->bio ?? '',
+            'school' => $this->school ?? "",
+            'faculty' => $this->faculty ??'',
+            'department' => $this->department ?? '',
+            'level' => $this->level ?? '',
+            'matricule' => $this->level?? '',
             'email_verified_at' => $this->email_verified_at ?? ''
         ];
 

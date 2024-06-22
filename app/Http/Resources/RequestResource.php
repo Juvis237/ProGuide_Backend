@@ -17,14 +17,15 @@ class RequestResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'duration' => $this->date,
+            'duration' =>$this->mode?->duration ?? $this->delivrable->duration  ,
             'status' => $this->status,
+            'number' => $this->number,
             'user'=>UserResource::make($this->user),
             'delivrable' => DelivrableResource::make($this->delivrable),
             'mode'=>ModeResource::make($this->mode),
-            'service' => ServiceResource::collection(isset($this->service_id)? UserService::find($this->service_id): []),
-            'date' => $this->created_at->format('l d, M Y'),
-            'time' => $this->date->format('h:i'),
+            'user_data' => json_decode($this->user_data),
+            'date' => $this->created_at,
+            'time' => $this->date,
         ];
     }
 }

@@ -45,7 +45,7 @@ class Index extends Component
 
     protected function getBaseQuery()
     {
-        return User::query()->select('users.*')->where('role', 'client')->where('admin', 0);
+        return User::query()->select('users.*')->where('role', '!=' ,  'admin');
     }
 
     public function resetFilters()

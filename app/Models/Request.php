@@ -25,6 +25,7 @@ class Request extends Model
     const STATUS_PENDING = "pending";
     const STATUS_PROCESSING = "processing";
     const STATUS_ASSIGNED = "assigned";
+    const STATUS_PRINTED = "printed";
     const STATUS_COMPLETED = "completed";
     const STATUS_CANCELLED = "cancelled";
 

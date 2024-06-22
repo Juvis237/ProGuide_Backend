@@ -18,9 +18,12 @@ return new class extends Migration
             $table->foreignId('mode_id')->nullable();
             $table->foreignId('assigned_to')->nullable();
             $table->dateTime('date')->nullable();
+            $table->integer('number')->nullable();
+            $table->boolean('for_me')->nullable();
             $table->integer('rating')->nullable();
             $table->string('comment')->nullable();
             $table->enum('status', ['draft','pending', 'processing','assigned', 'completed', 'cancelled']);
+            $table->json('user_data')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
