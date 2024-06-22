@@ -121,7 +121,6 @@ class RequestController extends Controller
             "delivrable_id" => 'required',
             "mode_id" => "nullable",
             "number" => 'required',
-            "user_data" => 'required',
         ]);
 
         if ($validated->fails()) {
@@ -136,7 +135,7 @@ class RequestController extends Controller
             'delivrable_id' => $request->delivrable_id,
             'mode_id' => $request->mode_id,
             'number' => $request->number,
-            'user_data' => json_encode($request->user_data),
+            'user_data' => json_encode($request->all()),
             'date' => $request->date,
             'status' => \App\Models\Request::STATUS_PENDING,
         ]);

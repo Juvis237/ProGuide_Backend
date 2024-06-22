@@ -30,8 +30,8 @@ class CampayController extends Controller
     private function request_token()
     {
         $config = [
-            "username" => env('CAMPAY_USERNAME'),
-            "password" => env('CAMPAY_PASSWORD')
+            "username" => env('CAMPAY_USERNAME', 'zn4QATUy-7p694Dk4zYOG0erI084uKQ3cJU0rFuzgV_CJJf4jddAeLnibhXtX39OmLEOKFgKP5z_cacnswMBpg'),
+            "password" => env('CAMPAY_PASSWORD', 'rTSZCxVsQh03Zg5w98b7h63w0pAJ9SXQ1z7tFDnhBa6lNLtw3qvQ-bGc8rmYui5G9ipb2DLj40aXUzRBHCmomw')
         ];
 
         $options = [
@@ -76,13 +76,30 @@ class CampayController extends Controller
         return $responseData;
     }
 
-    public function getTransactionStatus($reference)
+    public function getTransactionStatus(Request $request)
     {
-        $uri = "transaction/" . $reference . "/";
+        $uri = "transaction/" . $request->reference . "/";
         $response = $this->client->get($uri, [
             "headers" => $this->headers
         ]);
-        return $response->getBody()->getContents();
+        $response_data = $response->getBody()->getContents();
+        $status = json_decode($response_data)?->status;
+        if($status == 'SUCCESSFUL'){
+            $payment = Payment::where('transaction_id', $request->reference)->first();
+            if($payment){
+                $payment->status = 'successful';
+                $payment->save();
+            }
+            return response()->json([
+               'success' => true,
+               'message' => 'Payment successful'
+            ]);
+        } else{
+            return response()->json([
+               'success' => false,
+               'message' => 'Payment failed Try again later'
+            ]);
+        }
     }
 
     public function withdraw(Request $request)

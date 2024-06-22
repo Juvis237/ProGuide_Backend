@@ -5,13 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Wallet;
 use App\Models\Expenses;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class WalletController extends Controller
 {
+    public User $user;
+    public function __construct()
+    {
+        $this->user = Auth::guard('api')->user();
+    }
     //
     public function balance(Request $request){
-        $user_id = $request->user_id;
-        $wallet = Wallet::where('user_id', $user_id)->first();
+        $wallet = Wallet::where('user_id', $this->user->id)->first();
 
         if ($wallet) {
             return response()->json([
@@ -30,12 +36,11 @@ class WalletController extends Controller
     public function addExpense(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric|min:0',
             'description' => 'nullable|string',
         ]);
 
-        $wallet = Wallet::where('user_id', $request->user_id)->firstOrFail();
+        $wallet = Wallet::where('user_id', $this->user->id)->first();
         
         $balanceBefore = $wallet->balance;
         $balanceAfter = $balanceBefore - $request->amount;
@@ -47,7 +52,7 @@ class WalletController extends Controller
             ], 400);
         }
 
-        $expense = Expense::create([
+        $expense = Expenses::create([
             'wallet_id' => $wallet->id,
             'amount' => $request->amount,
             'balance_before' => $balanceBefore,
@@ -65,12 +70,7 @@ class WalletController extends Controller
 
     public function transactions(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        $user_id = $request->user_id;
-        $wallet = Wallet::where('user_id', $user_id)->first();
+        $wallet = Wallet::where('user_id', $this->user->id)->first();
 
         if (!$wallet) {
             return response()->json([

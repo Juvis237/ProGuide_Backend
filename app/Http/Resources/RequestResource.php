@@ -24,8 +24,8 @@ class RequestResource extends JsonResource
             'delivrable' => DelivrableResource::make($this->delivrable),
             'mode'=>ModeResource::make($this->mode),
             'user_data' => json_decode($this->user_data),
-            'date' => $this->created_at->format('l d, M Y'),
-            'time' => $this->date->format('h:i'),
+            'date' => $this->created_at,
+            'time' => $this->date,
         ];
     }
 }
