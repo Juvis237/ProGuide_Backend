@@ -34,6 +34,8 @@ class User extends Authenticatable
         'region_id',
         'address',
         'password',
+        'referal_code',
+        'refered_by',
         'profile',
         'bio'
     ];
