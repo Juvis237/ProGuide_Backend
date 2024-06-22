@@ -10,7 +10,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\UserVerificationController;
 use App\Http\Controllers\CampayController;
-
+use App\Http\Controllers\WalletController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -75,6 +75,10 @@ Route::group(['namespace' => 'API'], function () {
         // Campay routes requiring authentication
         Route::post('collect', [CampayController::class, 'collect']);
         Route::get('transaction/{reference}', [CampayController::class, 'getTransactionStatus']);
+
+        //wallet and transactions
+        Route::get('balance', [WalletController::class, 'balance']);
+        Route::get('transactions', [WalletController::class, 'transactions']);
 
     });
 });
