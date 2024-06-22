@@ -23,6 +23,10 @@
             font-size: 12px;
         }
 
+        .menu-custom {
+            padding: 20px !important;
+        }
+
         .btn {
             padding: 0.25rem 0.5rem;
             font-size: .875rem;
@@ -170,7 +174,7 @@
 
         <div id="sidebar-menu">
 
-            <ul class="metismenu" id="side-menu">
+            <ul class="metismenu menu-custom" id="side-menu">
                 <li>
                     <a href="{{route('home')}}">
                         <i class="fa fa-home"></i>
@@ -206,6 +210,7 @@
 
                         </ul>
                     </li>
+                    <li><a href="{{route('constant.index')}}"><i class="fa fa-question-circle"></i><span>Constants</span> </a></li>
             
 
             

@@ -120,7 +120,8 @@ class RequestController extends Controller
         $validated = Validator::make($request->all(), [
             "delivrable_id" => 'required',
             "mode_id" => "nullable",
-            "date" => "date|after:now",
+            "number" => 'required',
+            "user_data" => 'required',
         ]);
 
         if ($validated->fails()) {
@@ -134,6 +135,8 @@ class RequestController extends Controller
             'user_id' => $this->user->id,
             'delivrable_id' => $request->delivrable_id,
             'mode_id' => $request->mode_id,
+            'number' => $request->number,
+            'user_data' => json_encode($request->user_data),
             'date' => $request->date,
             'status' => \App\Models\Request::STATUS_PENDING,
         ]);

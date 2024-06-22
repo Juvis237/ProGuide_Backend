@@ -24,6 +24,10 @@
             font-size: 12px;
         }
 
+        .menu-custom {
+            padding: 20px !important;
+        }
+
         .btn {
             padding: 0.25rem 0.5rem;
             font-size: .875rem;
@@ -100,15 +104,15 @@
             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('admin.notifications', [])->html();
-} elseif ($_instance->childHasBeenRendered('lC4QtNw')) {
-    $componentId = $_instance->getRenderedChildComponentId('lC4QtNw');
-    $componentTag = $_instance->getRenderedChildComponentTagName('lC4QtNw');
+} elseif ($_instance->childHasBeenRendered('RcWufcj')) {
+    $componentId = $_instance->getRenderedChildComponentId('RcWufcj');
+    $componentTag = $_instance->getRenderedChildComponentTagName('RcWufcj');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('lC4QtNw');
+    $_instance->preserveRenderedChild('RcWufcj');
 } else {
     $response = \Livewire\Livewire::mount('admin.notifications', []);
     $html = $response->html();
-    $_instance->logRenderedChild('lC4QtNw', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('RcWufcj', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
@@ -185,7 +189,7 @@ echo $html;
 
         <div id="sidebar-menu">
 
-            <ul class="metismenu" id="side-menu">
+            <ul class="metismenu menu-custom" id="side-menu">
                 <li>
                     <a href="<?php echo e(route('home')); ?>">
                         <i class="fa fa-home"></i>
@@ -221,6 +225,7 @@ echo $html;
 
                         </ul>
                     </li>
+                    <li><a href="<?php echo e(route('constant.index')); ?>"><i class="fa fa-question-circle"></i><span>Constants</span> </a></li>
             
 
             

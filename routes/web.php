@@ -46,7 +46,7 @@ Route::group(['prefix' => 'admin',], function () {
         Route::get('/schools',  [\App\Http\Livewire\Admin\School\Index::class, '__invoke'])->name('admin.schools');
         Route::get('/schools/{school}',  [\App\Http\Livewire\Admin\School\Details::class, '__invoke'])->name('admin.school.details');
         Route::get('/school/delivrable/{delivrable}',  [\App\Http\Livewire\Admin\School\Delivrable\Details::class, '__invoke'])->name('admin.delivrable.details');
-
+        Route::get('/constants',  [\App\Http\Livewire\Admin\Constant\Index::class, '__invoke'])->name('constant.index');
 
             Route::get('/categories', [\App\Http\Livewire\Admin\Categories\Index::class, '__invoke'])->name('categories');
             Route::get('/blogs', [\App\Http\Livewire\Admin\Blog\Index::class, '__invoke'])->name('blogs');

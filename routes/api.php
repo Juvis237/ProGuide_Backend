@@ -39,8 +39,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::middleware('auth:api')->group(function () {
         // update user profile data
         Route::post('profile_update', [ProfileController::class, 'update']);
-        Route::post('user/profile/update', [ProfileController::class, 'updateProfile']);
-        Route::post('user/business/update', [ProfileController::class, 'updateBussinessProfile']);
         Route::get('profile', [ProfileController::class, 'show']);
         Route::post('save_skills', [ProfileController::class, 'saveSkills']);
         Route::post('user/change_password', [ProfileController::class,'changePassword']);

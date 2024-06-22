@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\Models\UserService;
 use App\Models\UserServiceSkill;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public User $user;
 
     /**
      *Get profile of authenticated user
@@ -31,57 +33,20 @@ class ProfileController extends Controller
      *
      * @queryParam first_name nullable  User First name
      * @queryParam last_name nullable  User Last name
+     *@request /update_profile
      * @method POST
      */
 
     public function update(Request $request)
     {
-        $validated = Validator::make($request->all(), [
-            "first_name" => "required",
-            "last_name" => "required",
-            'role' => "required",
-            'company' => 'required_if:role,worker',
-            'photo' => "nullable|file",
-            'address' => 'required_if:role,worker',
-            'region' => 'required_if:role,worker',
-            'city' => 'required_if:role,worker',
-            'website' => 'nullable|url',
-            'bio' => 'required_if:role,worker',
-        ]);
-
-        if ($validated->fails()) {
-            return response(['success' => false,
-                'message' => $validated->errors()->first()
-            ]);
-        };
-
-        $data = $request->all();
-        $data['city_id'] = $data['city'];
-        $data['region_id'] = $data['region'];
-
-        if (isset($request->photo)) {
-            $data['profile'] = $request->photo->store('profiles');
-        }
-
-        unset($data['type']);
-
-        $user = $request->user();
-        $user->update($data);
-        $user->refresh();
-        return response()->json([
-            'user' => UserResource::make($user),
-            'message' => 'Profile Updated Successfully',
-            'success' => true
-        ], 200);
-    }
-
-    public function updateProfile(Request $request)
-    {
-        info($request->all());
+        
+        $this->user = Auth::guard('api')->user();
         $validated = Validator::make($request->all(), [
             "first_name" => "nullable",
             "last_name" => "nullable",
-            'email' => "nullable",
+            'user_name' => "nullable",
+            'phone' => "nullable",
+            'image' => "nullable|file",
         ]);
 
         if ($validated->fails()) {
@@ -92,26 +57,18 @@ class ProfileController extends Controller
 
         $data = $request->all();
 
-        if (isset($request->photo)) {
+        if (isset($request->image)) {
             $data['profile'] = $request->photo->store('profiles');
         }
-
-        unset($data['type']);
-
-        $user = $request->user();
-        $user->update([
-            'first_name' => $request->first_name ?? $user->first_name,
-            'last_name' => $request->last_name ?? $user->last_name,
-            'email' => $request->email ?? $user->email,
-            'profile' => $data['profile'] ?? $user->profile,
-        ]);
-        $user->refresh();
+        
+        $this->user->update($data);
         return response()->json([
-            'user' => UserResource::make($user),
+            'user' => UserResource::make($this->user),
             'message' => 'Profile Updated Successfully',
             'success' => true
         ], 200);
     }
+
 
     public function changePassword(Request $request){
 
@@ -148,7 +105,7 @@ class ProfileController extends Controller
         return response()->json([
             'success' => '200',
             'message' => "",
-            'notifications' => NotificationRe::collection($request->user()->notifications)
+            'notifications' => NotificationResource::collection($request->user()->notifications)
         ]);
     }
 
