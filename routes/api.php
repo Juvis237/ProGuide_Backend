@@ -73,7 +73,7 @@ Route::group(['namespace' => 'API'], function () {
         });
         
         // Campay routes requiring authentication
-        Route::post('collect', [CampayController::class, 'collect']);
+        Route::post('pay', [CampayController::class, 'collect']);
         Route::get('transaction/{reference}', [CampayController::class, 'getTransactionStatus']);
 
         //wallet and transactions
