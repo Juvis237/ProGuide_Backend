@@ -79,7 +79,7 @@ class WalletController extends Controller
             ], 404);
         }
 
-        $transactions = Expense::where('wallet_id', $wallet->id)->get();
+        $transactions = Expenses::where('wallet_id', $wallet->id)->get();
 
         return response()->json([
             'success' => true,

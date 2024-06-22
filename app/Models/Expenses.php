@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Expense extends Model
+class Expenses extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,7 @@ class Expense extends Model
         'balance_before',
         'balance_after',
         'description',
+        'type',
     ];
 
     public function wallet()
