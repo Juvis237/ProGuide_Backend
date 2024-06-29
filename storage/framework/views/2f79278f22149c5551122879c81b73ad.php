@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <span>
-                        <h4><?php echo e($user->first_name); ?></h4>
+                        <h4><?php echo e($user->name); ?></h4>
                         <li class="text-primary font-weight-bold"><?php echo e(ucfirst($user->role)); ?></li>
                         <div class="d-flex mt-2">
                             <a class="btn border border-primary rounded  text-primary <?php echo e($user->role == 'client'? 'd-none' : ''); ?>" href="<?php echo e(route('edit.user', ['user' => $user->id])); ?>">
@@ -56,22 +56,22 @@
                     </span>
 
                     <div class="<?php echo e($user->role == 'client'? 'd-none': ''); ?> pt-4 border-top">
-                        <h4>Businness Information</h4>
+                        <h4>School Information</h4>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark"><?php echo e(__('edits.company')); ?>  :</p>
-                            <p class="font-16 mx-2 text-dark"><?php echo e($user->company_name); ?></p>
+                            <p class="font-weight-bold font-16 text-dark">School  :</p>
+                            <p class="font-16 mx-2 text-dark"><?php echo e($user->school); ?></p>
                         </div>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark">Bio :</p>
-                            <p class="font-16 mx-2 text-dark"><?php echo e($user->bio); ?></p>
+                            <p class="font-weight-bold font-16 text-dark">Faculty :</p>
+                            <p class="font-16 mx-2 text-dark"><?php echo e($user->faculty); ?></p>
                         </div>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark"><?php echo e(__('edits.location')); ?>  :</p>
-                            <p class="font-16 mx-2 text-dark"><?php echo e($user->address); ?></p>
+                            <p class="font-weight-bold font-16 text-dark">Department :</p>
+                            <p class="font-16 mx-2 text-dark"><?php echo e($user->department); ?></p>
                         </div>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark"><?php echo e(__('edits.website')); ?>  :</p>
-                            <p class="font-16 mx-2 text-dark"><?php echo e($user->website); ?></p>
+                            <p class="font-weight-bold font-16 text-dark">Level  :</p>
+                            <p class="font-16 mx-2 text-dark"><?php echo e($user->level); ?></p>
                         </div>
                     </div>
 
@@ -89,6 +89,49 @@
                     </a>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
+            <?php if($tab == 0): ?>
+            <div class="table-responsive">
+                <table class="table table-bordered m-0">
+        
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Delivrable</th>
+                        <th>Mode</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $__currentLoopData = $user->requests; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k=>$request): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr wire:key="<?php echo e($k); ?>">
+                            <td><?php echo e($loop->index + 1); ?></td>
+                            <td><?php echo e($request->user->name); ?></td>
+                            <td><?php echo e($request->delivrable->name); ?> </td>
+                            <td><?php echo e($request->mode->name); ?></td>
+                            <td>
+                                <div class="badge badge-<?php echo e($request->status); ?> p-2"><?php echo e(ucfirst($request->status)); ?></div>
+                            </td>
+                            <td><?php echo e($request->assignedTo?->name); ?></td>
+                            <td><?php echo e($request->created_at->format('d M Y')); ?></td>
+                            <td><?php echo e(isset($request->delivrable->duration)? $request->delivrable->duration : $request->mode->duration); ?> Days</td>
+                            <td>
+                                <?php if($request->status != 'assigned'): ?>
+                                <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',<?php echo e($request); ?>)"
+                                   class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        
+                    </tbody>
+                </table>
+            </div>
+            <?php endif; ?>
         </div>
 
         <div>

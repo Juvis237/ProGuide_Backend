@@ -59,7 +59,7 @@
                 <tr wire:key="<?php echo e($k); ?>">
                     <td><?php echo e($loop->index + 1); ?></td>
                     <td>
-                        <?php echo e($user->first_name); ?>
+                        <?php echo e($user->name); ?>
 
                     </td>
                     <td>

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('for_me')->nullable();
             $table->integer('rating')->nullable();
             $table->string('comment')->nullable();
-            $table->enum('status', ['draft','pending', 'processing','assigned', 'completed', 'cancelled']);
+            $table->string('status')->default('pending');
             $table->json('user_data')->nullable();
             $table->timestamps();
             $table->softDeletes();

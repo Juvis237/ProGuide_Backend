@@ -104,24 +104,25 @@
             <?php
 if (! isset($_instance)) {
     $html = \Livewire\Livewire::mount('admin.notifications', [])->html();
-} elseif ($_instance->childHasBeenRendered('3I6uIVY')) {
-    $componentId = $_instance->getRenderedChildComponentId('3I6uIVY');
-    $componentTag = $_instance->getRenderedChildComponentTagName('3I6uIVY');
+} elseif ($_instance->childHasBeenRendered('hihjfto')) {
+    $componentId = $_instance->getRenderedChildComponentId('hihjfto');
+    $componentTag = $_instance->getRenderedChildComponentTagName('hihjfto');
     $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
-    $_instance->preserveRenderedChild('3I6uIVY');
+    $_instance->preserveRenderedChild('hihjfto');
 } else {
     $response = \Livewire\Livewire::mount('admin.notifications', []);
     $html = $response->html();
-    $_instance->logRenderedChild('3I6uIVY', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+    $_instance->logRenderedChild('hihjfto', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
 }
 echo $html;
 ?>
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
-                    <img src="<?php echo e(asset('be_assets')); ?>/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="<?php echo e(auth()->user()->profile? asset('storage/'.auth()->user()->profile)  : asset('be_assets/images/users/avatar-1.jpg')); ?>" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
-                                    Admin
+                                   <?php echo e(auth()->user()->user_name); ?>
+
                             </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -179,10 +180,10 @@ echo $html;
 
         <div class="user-box">
             <div class="float-left">
-                <img src="<?php echo e(asset('be_assets')); ?>/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle">
+                <img src="<?php echo e(auth()->user()->profile? asset('storage/'.auth()->user()->profile) : asset('be_assets/images/users/avatar-1.jpg')); ?>" alt="" class="avatar-md rounded-circle">
             </div>
             <div class="user-info">
-                <a href="#">Admin</a>
+                <a href="#"><?php echo e(auth()->user()->user_name); ?></a>
                 <p class="text-muted m-0">Administrator</p>
             </div>
         </div>
@@ -198,14 +199,20 @@ echo $html;
                 </li>
                 <li>
                     <a href="<?php echo e(route('admin.schools')); ?>">
-                        <i class="fa fa-home"></i>
+                        <i class="fa fa-university"></i>
                         <span> Schools</span>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo e(route('requests')); ?>">
-                        <i class="fa fa-home"></i>
+                        <i class="fa fa-question"></i>
                         <span> Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('index.user', ['type' => 'client'])); ?>">
+                        <i class="fa fa-users"></i>
+                        <span> Users</span>
                     </a>
                 </li>
 
@@ -260,7 +267,7 @@ echo $html;
 
                 <li>
                     <a href="javascript: void(0);">
-                        <i class="fa fa-users"></i>
+                        <i class="fa fa-user"></i>
                         <span>Profile</span>
                         <span class="menu-arrow"></span>
                     </a>

@@ -18,7 +18,7 @@ class CampayController extends Controller
 
     public function __construct($base_url = "https://demo.campay.net/api/")
     {
-        $this->user = Auth::guard('api')->user();
+        $this->user = Auth::guard('api')?->user();
         $this->client = new Client([
             'base_uri' => $base_url,
             'timeout' => 30 // 30 sec timeout
@@ -88,6 +88,7 @@ class CampayController extends Controller
             $payment = Payment::where('transaction_id', $request->reference)->first();
             if($payment){
                 $payment->status = 'successful';
+                $payment->request->paid = true;
                 $payment->save();
             }
             return response()->json([

@@ -35,14 +35,19 @@ class UpdateProfile extends Component
             $this->emit("error", "No changes detected");
             return;
         }
-        $this->user->name = $this->title;
+        $this->user->user_name = $this->title;
         $this->user->phone = $this->phone;
         $this->user->email = $this->email;
         if (isset($this->profile_picture)) {
-            if ($this->old_profile_picture != '') {
-                unlink('storage/' . $this->old_profile_picture);
+            try {
+                if ($this->old_profile_picture != '') {
+                    unlink('storage/' . $this->old_profile_picture);
+                }
+                $this->user->profile = $this->profile_picture->store('images');
+            } catch (\Throwable $th) {
+                //throw $th;
             }
-            $this->user->profile = $this->profile_picture->store('images');
+
         }
         $this->user->save();
         $this->emit("success", __('messages.action_success'));
