@@ -59,13 +59,7 @@ class Index extends Component
         if (strlen($value) === 0) {
             return $query;
         }
-        if($value == 'not_assigned'){
-            return $query->where('assigned_to', null);
-        }else{
-            return $query->where('assigned_to', '!=' , null);
-        }
-
-        return $query->where('status', 'like', "%$value%");
+        return $query->where('status', $value);
     }
     public function render()
     {

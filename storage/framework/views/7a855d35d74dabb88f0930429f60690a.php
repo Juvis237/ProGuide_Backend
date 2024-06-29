@@ -10,8 +10,9 @@
             <div>
                 <select name="" wire:model='filters.status' class="form-control rounded-md " id="">
                     <option value="">Status</option>
-                    <option value="<?php echo e('assigned'); ?>" >Assigned</option>
-                    <option value="<?php echo e('not_assigned'); ?> ">Not Assigned</option>
+                    <?php $__currentLoopData = \App\Models\Request::STATUS; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($item); ?>"><?php echo e(strtoupper($item)); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
 
@@ -46,14 +47,17 @@
                     <td><?php echo e($request->user->name); ?></td>
                     <td><?php echo e($request->delivrable->name); ?> </td>
                     <td><?php echo e($request->mode->name); ?></td>
-                    <td><?php echo e($request->status); ?></td>
-                    <td><?php echo e($request->assignedTo->name); ?></td>
-                    <td><?php echo e($blog->created_at->format('d M Y')); ?></td>
+                    <td>
+                        <div class="badge badge-<?php echo e($request->status); ?> p-2"><?php echo e(ucfirst($request->status)); ?></div>
+                    </td>
+                    <td><?php echo e($request->assignedTo?->name); ?></td>
+                    <td><?php echo e($request->created_at->format('d M Y')); ?></td>
                     <td><?php echo e(isset($request->delivrable->duration)? $request->delivrable->duration : $request->mode->duration); ?> Days</td>
                     <td>
+                        <?php if($request->status != 'assigned'): ?>
                         <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',<?php echo e($request); ?>)"
-                           class="btn btn-default text-success"><i class="fa fa-pen"></i> <?php echo e(__('edits.edit')); ?></a>
-
+                           class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

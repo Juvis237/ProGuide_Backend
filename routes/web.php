@@ -27,7 +27,7 @@ Route::get('/commands', function(){
 
 });
 
-
+Route::get('payment/status', [CampayController::class, 'getTransactionStatus'])->name('payment.status');
 Route::group(['prefix' => 'admin',], function () {
     Route::get('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [\App\Http\Controllers\Admin\Auth\LoginController::class, 'login'])->name('admin.login');

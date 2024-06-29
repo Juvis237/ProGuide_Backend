@@ -104,9 +104,9 @@
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
-                    <img src="{{asset('be_assets')}}/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="{{auth()->user()->profile? asset('storage/'.auth()->user()->profile)  : asset('be_assets/images/users/avatar-1.jpg')}}" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
-                                    Admin
+                                   {{auth()->user()->user_name}}
                             </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -164,10 +164,10 @@
 
         <div class="user-box">
             <div class="float-left">
-                <img src="{{asset('be_assets')}}/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle">
+                <img src="{{auth()->user()->profile? asset('storage/'.auth()->user()->profile) : asset('be_assets/images/users/avatar-1.jpg')}}" alt="" class="avatar-md rounded-circle">
             </div>
             <div class="user-info">
-                <a href="#">Admin</a>
+                <a href="#">{{auth()->user()->user_name}}</a>
                 <p class="text-muted m-0">Administrator</p>
             </div>
         </div>
@@ -183,14 +183,20 @@
                 </li>
                 <li>
                     <a href="{{route('admin.schools')}}">
-                        <i class="fa fa-home"></i>
+                        <i class="fa fa-university"></i>
                         <span> Schools</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{route('requests')}}">
-                        <i class="fa fa-home"></i>
+                        <i class="fa fa-question"></i>
                         <span> Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('index.user', ['type' => 'client'])}}">
+                        <i class="fa fa-users"></i>
+                        <span> Users</span>
                     </a>
                 </li>
 
@@ -245,7 +251,7 @@
 
                 <li>
                     <a href="javascript: void(0);">
-                        <i class="fa fa-users"></i>
+                        <i class="fa fa-user"></i>
                         <span>Profile</span>
                         <span class="menu-arrow"></span>
                     </a>

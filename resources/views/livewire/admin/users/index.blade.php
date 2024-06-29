@@ -59,7 +59,7 @@
                 <tr wire:key="{{$k}}">
                     <td>{{$loop->index + 1}}</td>
                     <td>
-                        {{$user->first_name}}
+                        {{$user->name}}
                     </td>
                     <td>
                         {{$user->phone}}

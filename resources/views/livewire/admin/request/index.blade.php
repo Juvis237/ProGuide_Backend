@@ -10,8 +10,9 @@
             <div>
                 <select name="" wire:model='filters.status' class="form-control rounded-md " id="">
                     <option value="">Status</option>
-                    <option value="{{'assigned'}}" >Assigned</option>
-                    <option value="{{'not_assigned'}} ">Not Assigned</option>
+                    @foreach (\App\Models\Request::STATUS as $item)
+                        <option value="{{$item}}">{{strtoupper($item)}}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -46,14 +47,17 @@
                     <td>{{$request->user->name}}</td>
                     <td>{{$request->delivrable->name}} </td>
                     <td>{{$request->mode->name}}</td>
-                    <td>{{$request->status}}</td>
-                    <td>{{$request->assignedTo->name}}</td>
-                    <td>{{$blog->created_at->format('d M Y')}}</td>
+                    <td>
+                        <div class="badge badge-{{$request->status}} p-2">{{ucfirst($request->status)}}</div>
+                    </td>
+                    <td>{{$request->assignedTo?->name}}</td>
+                    <td>{{$request->created_at->format('d M Y')}}</td>
                     <td>{{isset($request->delivrable->duration)? $request->delivrable->duration : $request->mode->duration}} Days</td>
                     <td>
+                        @if($request->status != 'assigned')
                         <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',{{$request}})"
-                           class="btn btn-default text-success"><i class="fa fa-pen"></i> {{__('edits.edit')}}</a>
-
+                           class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

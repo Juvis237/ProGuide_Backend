@@ -20,5 +20,9 @@ class Payment extends Model
         'description',
     ];
 
+    public function request(){
+        return $this->belongsTo(Request::class, 'request_id');
+    }
+
     // Additional properties and methods can go here
 }

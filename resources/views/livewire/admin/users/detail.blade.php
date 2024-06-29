@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <span>
-                        <h4>{{$user->first_name}}</h4>
+                        <h4>{{$user->name}}</h4>
                         <li class="text-primary font-weight-bold">{{ucfirst($user->role)}}</li>
                         <div class="d-flex mt-2">
                             <a class="btn border border-primary rounded  text-primary {{$user->role == 'client'? 'd-none' : ''}}" href="{{route('edit.user', ['user' => $user->id])}}">
@@ -54,22 +54,22 @@
                     </span>
 
                     <div class="{{$user->role == 'client'? 'd-none': ''}} pt-4 border-top">
-                        <h4>Businness Information</h4>
+                        <h4>School Information</h4>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark">{{__('edits.company')}}  :</p>
-                            <p class="font-16 mx-2 text-dark">{{$user->company_name}}</p>
+                            <p class="font-weight-bold font-16 text-dark">School  :</p>
+                            <p class="font-16 mx-2 text-dark">{{$user->school}}</p>
                         </div>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark">Bio :</p>
-                            <p class="font-16 mx-2 text-dark">{{$user->bio}}</p>
+                            <p class="font-weight-bold font-16 text-dark">Faculty :</p>
+                            <p class="font-16 mx-2 text-dark">{{$user->faculty}}</p>
                         </div>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark">{{__('edits.location')}}  :</p>
-                            <p class="font-16 mx-2 text-dark">{{$user->address}}</p>
+                            <p class="font-weight-bold font-16 text-dark">Department :</p>
+                            <p class="font-16 mx-2 text-dark">{{$user->department}}</p>
                         </div>
                         <div class="d-flex align-items-center my-2">
-                            <p class="font-weight-bold font-16 text-dark">{{__('edits.website')}}  :</p>
-                            <p class="font-16 mx-2 text-dark">{{$user->website}}</p>
+                            <p class="font-weight-bold font-16 text-dark">Level  :</p>
+                            <p class="font-16 mx-2 text-dark">{{$user->level}}</p>
                         </div>
                     </div>
 
@@ -87,6 +87,49 @@
                     </a>
                 @endforeach
             </div>
+            @if ($tab == 0)
+            <div class="table-responsive">
+                <table class="table table-bordered m-0">
+        
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Delivrable</th>
+                        <th>Mode</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($user->requests as $k=>$request)
+                        <tr wire:key="{{$k}}">
+                            <td>{{$loop->index + 1}}</td>
+                            <td>{{$request->user->name}}</td>
+                            <td>{{$request->delivrable->name}} </td>
+                            <td>{{$request->mode->name}}</td>
+                            <td>
+                                <div class="badge badge-{{$request->status}} p-2">{{ucfirst($request->status)}}</div>
+                            </td>
+                            <td>{{$request->assignedTo?->name}}</td>
+                            <td>{{$request->created_at->format('d M Y')}}</td>
+                            <td>{{isset($request->delivrable->duration)? $request->delivrable->duration : $request->mode->duration}} Days</td>
+                            <td>
+                                @if($request->status != 'assigned')
+                                <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',{{$request}})"
+                                   class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+        
+                    </tbody>
+                </table>
+            </div>
+            @endif
         </div>
 
         <div>

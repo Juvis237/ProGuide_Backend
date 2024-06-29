@@ -20,6 +20,7 @@ class RequestResource extends JsonResource
             'duration' =>$this->mode?->duration ?? $this->delivrable->duration  ,
             'status' => $this->status,
             'number' => $this->number,
+            'paid' => $this->paid,
             'user'=>UserResource::make($this->user),
             'delivrable' => DelivrableResource::make($this->delivrable),
             'mode'=>ModeResource::make($this->mode),
