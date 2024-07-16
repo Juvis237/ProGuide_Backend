@@ -24,11 +24,12 @@ class UserResource extends JsonResource
             'role' => $this->role ?? "",
             'company' => $this->company ?? "",
             'address' => $this->address ?? "",
+            'referal_code' => $this->referal_code ?? "",
             'school' => $this->school ?? "",
             'faculty' => $this->faculty ??'',
             'department' => $this->department ?? '',
             'level' => $this->level ?? '',
-            'matricule' => $this->level?? '',
+            'matricule' => $this->matricule?? '',
             'email_verified_at' => $this->email_verified_at ?? ''
         ];
 
