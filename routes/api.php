@@ -11,6 +11,7 @@ use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\UserVerificationController;
 use App\Http\Controllers\CampayController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\ReferalController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -78,5 +79,7 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('balance', [WalletController::class, 'balance']);
         Route::get('transactions', [WalletController::class, 'transactions']);
 
+        // referals
+        Route::get('referrals', [ReferalController::class, 'get_referrals']);
     });
 });
