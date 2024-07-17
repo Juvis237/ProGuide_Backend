@@ -8,6 +8,7 @@ use App\Http\Controllers\API\SkillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\SendSMSController;
 use App\Http\Controllers\API\UserVerificationController;
 use App\Http\Controllers\CampayController;
 use App\Http\Controllers\WalletController;
@@ -33,6 +34,7 @@ Route::group(['namespace' => 'API'], function () {
     // register user
 
     Route::post('register', [AuthController::class, "register"]);
+    Route::post('sms', [SendSMSController::class, "send"]);
     Route::get('cities', [LocationController::class, "getCities"]);
     Route::get('regions', [LocationController::class, "getRegions"]);
     Route::post('search', [RequestController::class, "search"]);
