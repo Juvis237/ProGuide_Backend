@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Request as ModelsRequest;
 use App\Models\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,6 +27,7 @@ class RequestResource extends JsonResource
             'mode'=>ModeResource::make($this->mode),
             'user_data' => json_decode($this->user_data),
             'date' => $this->created_at,
+            'available_status'=>['pending', 'assigned', 'processing', 'received', 'delivered', 'completed'],
             'time' => $this->date,
         ];
     }

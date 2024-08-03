@@ -17,6 +17,7 @@ class UserResource extends JsonResource
         $result = [
             'id' => $this->id,
             'email' => $this->email ?? "",
+            'name' => $this->name??'',
             'first_name' => $this->first_name,
             'last_name' =>$this->last_name,
             'profile' => $this->profile?asset('storage/' . $this->profile):asset('be_assets/images/users/avatar-1.jpg'),
@@ -30,6 +31,7 @@ class UserResource extends JsonResource
             'department' => $this->department ?? '',
             'level' => $this->level ?? '',
             'matricule' => $this->matricule?? '',
+            'created_at' => $this->created_at??'',
             'email_verified_at' => $this->email_verified_at ?? ''
         ];
 

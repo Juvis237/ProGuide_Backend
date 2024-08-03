@@ -23,7 +23,7 @@ class ReferalController extends Controller
     {
         // $user = Auth::guard('api')->user();
 
-        if (!$this->$user) {
+        if (!$this->user) {
             return response()->json(['error' => 'User not authenticated'], 401);
         }
 

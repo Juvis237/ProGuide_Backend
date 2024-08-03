@@ -75,6 +75,7 @@ Route::group(['namespace' => 'API'], function () {
         
         // Campay routes requiring authentication
         Route::post('pay', [CampayController::class, 'collect']);
+        Route::post('withdraw', [CampayController::class, 'withdraw']);
         Route::get('transaction', [CampayController::class, 'getTransactionStatus']);
 
         //wallet and transactions

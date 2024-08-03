@@ -6,9 +6,12 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\Wallet;
+use App\Notifications\SendMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 // use Illuminate\Support\Facades\Hash;
@@ -186,6 +189,18 @@ class AuthController extends Controller
         Auth::guard('api')->check($user);
 
         $token = $user->createToken('authToken')->accessToken;
+        $user = Auth::guard('api')->user();
+        Wallet::create([
+            'user_id'=> $user->id
+        ]);
+        $details['greeting'] = 'Dear '.$user->name;
+        $details['subject'] = 'Welcome To Proguide';
+        $details['body'] = "<p>Welcome to Proguide, go forth and apply for a document on the platform, make sure you refer a friend";
+        
+        try{
+            Notification::send($user, new SendMail($details));
+        }catch(\Exception $e){
+        }
 
        if ($token) {
             return response([
