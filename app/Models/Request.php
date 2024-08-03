@@ -11,7 +11,7 @@ class Request extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'delivrable_id', 'mode_id', 'status', 'assigned_to', 'date', 'rating', 'comment', 
+        'user_id', 'delivrable_id', 'mode_id', 'status', 'assigned_to', 'date', 'rating', 'comment','user_data' 
 
     ];
 
@@ -30,7 +30,7 @@ class Request extends Model
     const STATUS_CANCELLED = "cancelled";
 
     const STATUS = [
-        self::STATUS_DRAFT, self::STATUS_PENDING, self::STATUS_PROCESSING, self::STATUS_ASSIGNED, self::STATUS_COMPLETED, self::STATUS_CANCELLED, 
+        self::STATUS_DRAFT, self::STATUS_PENDING, self::STATUS_PROCESSING, self::STATUS_ASSIGNED, self::STATUS_COMPLETED, self::STATUS_CANCELLED, self::STATUS_RECEIVED
     ];
 
     public function images(){

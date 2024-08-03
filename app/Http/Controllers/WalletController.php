@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Constant;
 use Illuminate\Http\Request;
 use App\Models\Wallet;
 use App\Models\Expenses;
@@ -23,13 +24,16 @@ class WalletController extends Controller
             return response()->json([
                 'success' => true,
                 'balance' => $wallet->balance,
+                'min_withdraw' => Constant::find(2),
+                'max_withdraw' => Constant::find(3),
             ]);
         } else {
             // Wallet is not found
             return response()->json([
-                'success' => false,
-                'message' => 'Wallet not found for the specified user ID.',
-            ], 404);
+                'balance' => 0,
+                'min_withdraw' => Constant::find(2)->value,
+                'max_withdraw' => Constant::find(3)->value,
+            ]);
         }
     }
 

@@ -37,6 +37,7 @@ class User extends Authenticatable
         'referal_code',
         'refered_by',
         'profile',
+        'referal_paid',
         'bio'
     ];
 
@@ -66,12 +67,12 @@ class User extends Authenticatable
         }
         return $this->user_name;
     }
+    public function referer(){
+        return $this->belongsTo(User::class, 'refered_by');
+    }
 
     public function requests(){
         return $this->hasMany(Request::class, 'user_id');
-    }
-    public function portfolios(){
-        return $this->hasMany(Portfolio::class, 'user_id');
     }
 
     public function city(){
@@ -95,19 +96,9 @@ class User extends Authenticatable
         return asset('storage/'.$this->profile);
     }
 
-    public function services(){
-        return $this->hasMany(UserService::class, 'user_id');
+    public function wallet(){
+        return Wallet::where('user_id', $this->id)->first();
     }
-
-    public function getServiceAttribute(){
-        return implode(", ",$this->hasMany(UserService::class, 'user_id')->pluck('title')->toArray());
-
-    }
-
-    public function portfolio(){
-        return $this->hasMany(Portfolio::class, 'user_id');
-    }
-
 
 
 }

@@ -2,11 +2,16 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Constant;
 use App\Models\Payment;
 use App\Models\Request as ModelsRequest;
+use App\Models\User;
+use App\Models\Wallet;
+use App\Notifications\SendMail;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class PaymentsCheck extends Command
 {
@@ -73,14 +78,70 @@ class PaymentsCheck extends Command
         if($status == 'SUCCESSFUL'){
             if($payment){
                 $payment->status = 'successful';
-                $payment->request->paid = true;
+                $payment->request?->update([
+                    'paid' => true,
+                ]);
                 $payment->save();
+                if(!$payment->user->referal_paid){
+                    if(!$payment->user->referer->wallet()){
+                        Wallet::create([
+                            'user_id' => $payment->user->referer->id
+                        ]);
+                    }
+                    $payment->user->referer->wallet()->update(
+                        [
+                            'balance' => $payment->user->referer->wallet()->balance + Constant::find(1)->value,
+                        ]
+                        );
+                    $payment->user->referal_paid = true;
+                    $payment->user->save();
+                    $details['greeting'] = 'Dear '.$payment->user->referer->name;
+                    $details['subject'] = 'Referal Payment';
+                    $details['body'] = "<p>Your Referal just paid for his first document so your account have been credited ";
+                    $user = $payment->user->referer;
+                    try{
+                        Notification::send($user, new SendMail($details));
+                        $this->info("Message sent successfully");
+                    }catch(\Exception $e){
+                        $this->info("email error");
+                    }
+                }
+                $details['greeting'] = 'Dear '.$payment->user->name;
+                $details['subject'] = 'Document Request Status';
+                $details['body'] = "<p>The payment of the document you requested for was successful. Visit our site for futher processing ";
+                $user = $payment->user;
+                try{
+                    Notification::send($user, new SendMail($details));
+                    $this->info("Message sent successfully");
+                }catch(\Exception $e){
+                    $this->info("email error");
+                }
+                $details['greeting'] = 'Dear Admin';
+                $details['subject'] = 'New Document Request';
+                $details['body'] = "<p>You have a new document request on the website. Assign to an agent ";
+                $admins = User::where('role', 'admin')->get();
+                try{
+                    Notification::send($admins, new SendMail($details));
+                    $this->info("Message sent successfully");
+                }catch(\Exception $e){
+                    $this->info("email error");
+                }
             }
 
         } elseif($status == 'FAILED'){
             if($payment){
                 $payment->status = 'failed';
                 $payment->save();
+                $details['greeting'] = 'Dear '.$payment->user->name;
+                $details['subject'] = 'Document Request Status';
+                $details['body'] = "<p>The payment of the document you requested for has failed. Please consider reapplying or contact support if you were debitted already ";
+                $user = $payment->user;
+                try{
+                    Notification::send($user, new SendMail($details));
+                    $this->info("Message sent successfully");
+                }catch(\Exception $e){
+                    $this->info("email error");
+                }
             }
         }
     }
@@ -92,10 +153,9 @@ class PaymentsCheck extends Command
             return;
         }
         foreach ($payments as $payment){
-           
             $this->start();
             $this->getTransactionStatus($payment);
-            $this->info($payment->reference.' marked as '. $payment->status);
+            $this->info($payment->transaction_id.' marked as '. $payment->status);
         };
     }
 }
