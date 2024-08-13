@@ -23,7 +23,6 @@ class ProfileController extends Controller
     public function show(Request $request)
     {
 
-
         $user = $request->user();
         return response(['user' => new UserResource($user), 'success' => true], 200);
     }
@@ -58,7 +57,7 @@ class ProfileController extends Controller
         $data = $request->all();
 
         if (isset($request->image)) {
-            $data['profile'] = $request->photo->store('profiles');
+            $data['profile'] = $request->image->store('profiles');
         }
         
         $this->user->update($data);
@@ -102,11 +101,21 @@ class ProfileController extends Controller
 
     public function notifications(Request $request)
     {
+        $this->user = Auth::guard('api')->user();
         return response()->json([
-            'success' => '200',
+            'success' => 'true',
             'message' => "",
-            'notifications' => NotificationResource::collection($request->user()->notifications)
+            'notifications' => $this->user->notifications
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('api')->user()->token()->revoke();
+        return response()->json([
+            'success' => 'true',
+            'message' => "Logged out Successfully",
+        ]);;
     }
 
     public function updateToken(Request $request)

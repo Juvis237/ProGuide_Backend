@@ -53,6 +53,8 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('schools', [RequestController::class, "getSchools"]);
         Route::get('modes', [RequestController::class, "getModes"]);
         Route::get('delivrables', [RequestController::class, "getDelivrables"]);
+        Route::get('logout', [ProfileController::class, "logout"]);
+        Route::get('notifications', [ProfileController::class, "notifications"]);
     });
 
 
@@ -65,7 +67,15 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('update_request/{id}', [RequestController::class, 'updateRequest']);
             Route::post('delete_request/{id}', [RequestController::class, 'deleteRequest']);
             Route::post('send_request/{id}', [RequestController::class, 'sendRequest']);
+            Route::post('rate',[RequestController::class, 'rateRequest'] );
         });
+
+        Route::group(['prefix' => 'agent'], function () {
+            Route::get('requests', [RequestController::class, 'getAgentRequest']);
+            Route::post('update/status', [RequestController::class, 'agentUpdateStatus']);
+        });
+
+
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('', [ProfileController::class, 'show']);

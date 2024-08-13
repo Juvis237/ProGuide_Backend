@@ -48,7 +48,7 @@
                     <td><?php echo e($request->delivrable->name); ?> </td>
                     <td><?php echo e($request->mode->name); ?></td>
                     <td>
-                        <div class="badge badge-<?php echo e($request->status); ?> p-2"><?php echo e(ucfirst($request->status)); ?></div>
+                        <div class="badge badge-success p-2"><?php echo e(ucfirst($request->status)); ?></div>
                     </td>
                     <td><?php echo e($request->assignedTo?->name); ?></td>
                     <td><?php echo e($request->created_at->format('d M Y')); ?></td>

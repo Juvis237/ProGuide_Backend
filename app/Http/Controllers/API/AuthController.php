@@ -129,7 +129,7 @@ class AuthController extends Controller
 
     public function generate()
     {
-        $data = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz!"$%&//(()=?+';
+        $data = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz';
         return substr(str_shuffle($data), 0, 8);
     }
 
@@ -189,7 +189,6 @@ class AuthController extends Controller
         Auth::guard('api')->check($user);
 
         $token = $user->createToken('authToken')->accessToken;
-        $user = Auth::guard('api')->user();
         Wallet::create([
             'user_id'=> $user->id
         ]);

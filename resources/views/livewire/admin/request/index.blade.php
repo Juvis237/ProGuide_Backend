@@ -48,7 +48,7 @@
                     <td>{{$request->delivrable->name}} </td>
                     <td>{{$request->mode->name}}</td>
                     <td>
-                        <div class="badge badge-{{$request->status}} p-2">{{ucfirst($request->status)}}</div>
+                        <div class="badge badge-success p-2">{{ucfirst($request->status)}}</div>
                     </td>
                     <td>{{$request->assignedTo?->name}}</td>
                     <td>{{$request->created_at->format('d M Y')}}</td>

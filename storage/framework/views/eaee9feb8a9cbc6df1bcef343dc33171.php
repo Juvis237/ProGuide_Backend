@@ -10,7 +10,7 @@
             </ol>
         </nav>
     </div>
-    <div class="justify-content-between">
+    <div class="justify-content-center">
         <div class="row">
             <?php echo $__env->make(
                 'components.card',
@@ -25,8 +25,24 @@
                 with([
                     'link' => route('admin.dashboard'),
                     'icon' => asset('images/business_service.svg'),
-                    'title' => __('admin.business_services'),
-                    'figure' => $businesServiceCount,
+                    'title' => 'Total Agents',
+                    'figure' => $agentCount,
+                ]), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make(
+                'components.card',
+                with([
+                    'link' => route('admin.dashboard'),
+                    'icon' => asset('images/business_service.svg'),
+                    'title' => 'Total Payments',
+                    'figure' => $paymentCount,
+                ]), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make(
+                'components.card',
+                with([
+                    'link' => route('admin.dashboard'),
+                    'icon' => asset('images/business_service.svg'),
+                    'title' => 'Total Revenue',
+                    'figure' => $revenueCount.' XAF',
                 ]), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <?php echo $__env->make(
                 'components.card',
