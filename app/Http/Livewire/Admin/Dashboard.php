@@ -9,6 +9,7 @@ use App\Models\Skill;
 use App\Models\testimonial;
 use App\Models\User;
 use App\Models\Page;
+use App\Models\Payment;
 use App\Models\UserService;
 use Livewire\Component;
 
@@ -20,6 +21,10 @@ class Dashboard extends Component
     public $faqCount;
     public $adminUserCount;
     public $UserCount;
+    public $agentCount;
+    public $paymentCount;
+    public $revenueCount;
+
     public $requestCount;
     public $businessCount;
     public $businessCategoryCount;
@@ -36,6 +41,9 @@ class Dashboard extends Component
         $this->requestCount = Request::count();
         $this->businessCount = User::where('role', 'worker')->count();
         $this->pageCount = Page::count();
+        $this->agentCount = User::where('role', 'agent')->count();
+        $this->paymentCount = Payment::where('status', 'successful')->count();
+        $this->revenueCount = Payment::where('status', 'successful')->sum('amount');
     }
 
     public function render()

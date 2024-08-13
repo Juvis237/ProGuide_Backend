@@ -1,4 +1,4 @@
-<div class="col">
+<div class="">
     <a href="{{ $link }}">
         <div class="card rounded-lg shadow-light border-0" style="width: 250px;">
             <div class="card-content" style="width: 294px;">
@@ -6,7 +6,7 @@
                     <div class="row media d-flex">
                         <div class="align-self-center">
                             <div class="icon-container rounded-lg" style="background-color: #E1F1FB; padding: 24px;">
-                                <ion-icon src="{{ $icon }}"></ion-icon>
+                                <i class="fa fa-calculator"></i>
                             </div>
                         </div>
                         <div class="col media-body pl-2">

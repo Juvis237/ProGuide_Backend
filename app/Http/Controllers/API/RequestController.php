@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Request as UserRequest;
 use App\Models\School;
+use App\Notifications\SendMail;
 
 class RequestController extends Controller
 {
@@ -102,6 +103,56 @@ class RequestController extends Controller
         return response([
             'success' => true,
             'requests' => RequestResource::collection($req->get()),
+        ]);
+    }
+
+    public function getAgentRequest(Request $request){
+        $agent = Auth::guard('api')->user();
+        $req = UserRequest::where('assigned_to', $agent->id)->get();
+        return response([
+            'success' => true,
+            'requests' => RequestResource::collection($req),
+        ]);
+    }
+
+    public function agentUpdateStatus(Request $request){
+        $this->user = Auth::guard('api')->user();
+        $req = UserRequest::find($request->id);
+        if($req){
+            try {
+                $req->status = $request->status;
+                $req->save();
+                $status = $req->status;
+                $details['greeting'] = 'Dear '.$req->user->name;
+                $details['subject'] = 'Document Request Status Change';
+                $details['body'] = "<p>The document you requested for has been marked as <b>{$status}</b> by your assigned admin</p> ";
+                $user = $req->user;
+                try{
+                    Notification::send($user, new SendMail($details));
+                }catch(\Exception $e){
+                }
+                $user_name = $req->user->name;
+                $details['greeting'] = 'Dear '.$this->user->name;
+                $details['subject'] = 'Document Request Status Change';
+                $details['body'] = "<p>You just marked the document of {$user_name} as {$status}</p>";
+                try{
+                    Notification::send($this->user, new SendMail($details));
+                }catch(\Exception $e){
+                }
+
+                return response(['success'=>true,
+                'message' => 'Status Updated Successfully'
+            ]);
+            } catch (\Throwable $th) {
+                return response(['success'=>false,
+                   'message' => 'Invalid Status'
+                ]);
+            }
+            $user = User::find($request->user_id);
+            $user->notify(new StatusUpdated($request));
+        }
+        return response([
+            'success' => true,
         ]);
     }
 

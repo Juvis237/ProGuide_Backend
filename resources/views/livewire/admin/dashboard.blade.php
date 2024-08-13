@@ -10,7 +10,7 @@
             </ol>
         </nav>
     </div>
-    <div class="justify-content-between">
+    <div class="justify-content-center">
         <div class="row">
             @include(
                 'components.card',
@@ -25,8 +25,24 @@
                 with([
                     'link' => route('admin.dashboard'),
                     'icon' => asset('images/business_service.svg'),
-                    'title' => __('admin.business_services'),
-                    'figure' => $businesServiceCount,
+                    'title' => 'Total Agents',
+                    'figure' => $agentCount,
+                ]))
+            @include(
+                'components.card',
+                with([
+                    'link' => route('admin.dashboard'),
+                    'icon' => asset('images/business_service.svg'),
+                    'title' => 'Total Payments',
+                    'figure' => $paymentCount,
+                ]))
+            @include(
+                'components.card',
+                with([
+                    'link' => route('admin.dashboard'),
+                    'icon' => asset('images/business_service.svg'),
+                    'title' => 'Total Revenue',
+                    'figure' => $revenueCount.' XAF',
                 ]))
             @include(
                 'components.card',

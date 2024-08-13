@@ -31,7 +31,7 @@ class SendMail extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
     /**
      * Get the mail representation of the notification.
@@ -55,8 +55,11 @@ class SendMail extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-
-        ];
+            return [
+                'name' => $notifiable->name,
+                'title' => $this->details['subject'],
+                'content' => $this->details['body']
+            ];
+        
     }
 }
