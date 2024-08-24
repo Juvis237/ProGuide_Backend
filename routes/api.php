@@ -7,6 +7,7 @@ use App\Http\Controllers\API\RequestController;
 use App\Http\Controllers\API\SkillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\PagesController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\SendSMSController;
 use App\Http\Controllers\API\UserVerificationController;
@@ -36,6 +37,9 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('register', [AuthController::class, "register"]);
     Route::post('sms', [SendSMSController::class, "send"]);
     Route::get('cities', [LocationController::class, "getCities"]);
+    Route::get('faqs', [PagesController::class, "faq"]);
+    Route::get('pages', [PagesController::class, "pages"]);
+    Route::post('contact', [PagesController::class, "contact"]);
     Route::get('regions', [LocationController::class, "getRegions"]);
     Route::post('search', [RequestController::class, "search"]);
 
@@ -67,7 +71,6 @@ Route::group(['namespace' => 'API'], function () {
             Route::post('update_request/{id}', [RequestController::class, 'updateRequest']);
             Route::post('delete_request/{id}', [RequestController::class, 'deleteRequest']);
             Route::post('send_request/{id}', [RequestController::class, 'sendRequest']);
-            Route::post('rate',[RequestController::class, 'rateRequest'] );
         });
 
         Route::group(['prefix' => 'agent'], function () {

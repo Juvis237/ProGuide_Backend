@@ -79,9 +79,15 @@
                         </div>
                          </td>
                     <td>
-                        <div class="button-list">
-                            <a href="{{route('user.detail', $user)}}" class="btn btn-primary"><i
-                                class="fa fa-eye"></i> </a>
+                        <div class="d-flex">
+                            <div class="button-list">
+                                <a href="{{route('user.detail', $user)}}" class="btn btn-primary"><i
+                                    class="fa fa-eye"></i> </a>
+                            </div>
+                            <div class="button-list ml-1">
+                                <a href="#" wire:click.prevent="$emitTo('admin.users.delete','load',{{$user}})" class="btn btn-danger "><i
+                                    class="fa fa-trash"></i> </a>
+                            </div>
                         </div>
                     </td>
 
@@ -103,4 +109,5 @@
             </div>
         @endif
         {{-- / Pagination --}}
+        <livewire:admin.users.delete />   
 </div>
