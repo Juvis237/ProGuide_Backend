@@ -339,9 +339,18 @@ class RequestController extends Controller
      * @method POST
      */
     public function rateRequest(Request $request) {
-       
-        $user_request = UserRequest::findOrFail((int)$request->input('id'));
+        $validated = Validator::make($request->all(),[
+            "request_id" => 'required',
+        ]);
 
+        if($validated->fails()){
+            return response([ 'success' => false,'message'=>'request id required']);
+        }
+
+        $user_request = UserRequest::find($request->request_id);
+        if(!$user_request){
+            return response([ 'success' => false,'message'=>'request not found']);
+        }
         $user_request->rating = (int)$request->input('rating');
         $user_request->comment = $request->input('comment');
 

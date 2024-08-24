@@ -84,9 +84,15 @@
                         </div>
                          </td>
                     <td>
-                        <div class="button-list">
-                            <a href="<?php echo e(route('user.detail', $user)); ?>" class="btn btn-primary"><i
-                                class="fa fa-eye"></i> </a>
+                        <div class="d-flex">
+                            <div class="button-list">
+                                <a href="<?php echo e(route('user.detail', $user)); ?>" class="btn btn-primary"><i
+                                    class="fa fa-eye"></i> </a>
+                            </div>
+                            <div class="button-list ml-1">
+                                <a href="#" wire:click.prevent="$emitTo('admin.users.delete','load',<?php echo e($user); ?>)" class="btn btn-danger "><i
+                                    class="fa fa-trash"></i> </a>
+                            </div>
                         </div>
                     </td>
 
@@ -109,5 +115,20 @@
             </div>
         <?php endif; ?>
         
+        <?php
+if (! isset($_instance)) {
+    $html = \Livewire\Livewire::mount('admin.users.delete', [])->html();
+} elseif ($_instance->childHasBeenRendered('l3773695278-0')) {
+    $componentId = $_instance->getRenderedChildComponentId('l3773695278-0');
+    $componentTag = $_instance->getRenderedChildComponentTagName('l3773695278-0');
+    $html = \Livewire\Livewire::dummyMount($componentId, $componentTag);
+    $_instance->preserveRenderedChild('l3773695278-0');
+} else {
+    $response = \Livewire\Livewire::mount('admin.users.delete', []);
+    $html = $response->html();
+    $_instance->logRenderedChild('l3773695278-0', $response->id(), \Livewire\Livewire::getRootElementTagName($html));
+}
+echo $html;
+?>   
 </div>
 <?php /**PATH /Users/ivanotechs/Documents/ProGuide/proguide_be/resources/views/livewire/admin/users/index.blade.php ENDPATH**/ ?>
