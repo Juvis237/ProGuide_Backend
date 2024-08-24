@@ -49,5 +49,8 @@ class Request extends Model
     public function assignedTo(){
         return $this->belongsTo(User::class, 'assigned_to');
     }
+    public function payment(){
+        return $this->hasOne(Payment::class,'request_id');
+    }
 
 }
