@@ -28,6 +28,8 @@ class Delete extends Component
         try {
             if(isset($this->user->profile)){
                 unlink('public/' . $this->user->profile);
+
+
             }
         } catch (\Exception $e) {
             $this->emit('error', "An error occurred while deleting");
