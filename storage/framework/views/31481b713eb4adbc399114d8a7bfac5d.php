@@ -34,6 +34,7 @@
                 <th>Delivrable</th>
                 <th>Mode</th>
                 <th>Status</th>
+                <th>Scan Copy</th>
                 <th>Assigned To</th>
                 <th>Date</th>
                 <th>Duration</th>
@@ -49,6 +50,10 @@
                     <td><?php echo e($request->mode->name); ?></td>
                     <td>
                         <div class="badge badge-success p-2"><?php echo e(ucfirst($request->status)); ?></div>
+                    </td>
+                    <td>
+                        <?php echo e($request->scan_copy? 'Yes' : 'No'); ?>
+
                     </td>
                     <td><?php echo e($request->assignedTo?->name); ?></td>
                     <td><?php echo e($request->created_at->format('d M Y')); ?></td>

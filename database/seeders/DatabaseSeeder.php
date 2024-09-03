@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $faker = \Faker\Factory::create();
-        Page::create(['title' => "Privacy Ploicy", 'content' => $faker->realText]);
+        /*Page::create(['title' => "Privacy Ploicy", 'content' => $faker->realText]);
         Page::create(['title' => "Terms And Condition", 'content' => $faker->realText]);
         Page::create([
             'title' => "We Help You Find and Hire the Right Professionals",
@@ -188,14 +188,14 @@ class DatabaseSeeder extends Seeder
         Constant::create([
             'name' => "Maximum Withdraw",
             'value' => "10000",
-        ]);
+        ]); */
         Constant::create([
             'name' => "Scan Copy",
             'value' => "100",
         ]);
 
 
-        $this->call(LocationSeerder::class);
+        //$this->call(LocationSeerder::class);
 
     }
 }

@@ -54,6 +54,7 @@ class PaymentsCheck extends Command
         $config = [
             "username" => config('app.campay_username'),
             "password" => config('app.campay_password'),
+
         ];
 
         $options = [
