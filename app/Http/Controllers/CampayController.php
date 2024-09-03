@@ -16,7 +16,7 @@ class CampayController extends Controller
     private Client $client;
     public User $user;
 
-    public function __construct($base_url = "https://demo.campay.net/api/")
+    public function __construct($base_url = "https://campay.net/api/")
     {
         $this->user = Auth::guard('api')?->user();
         $this->client = new Client([
@@ -30,8 +30,8 @@ class CampayController extends Controller
     private function request_token()
     {
         $config = [
-            "username" => env('CAMPAY_USERNAME', 'zn4QATUy-7p694Dk4zYOG0erI084uKQ3cJU0rFuzgV_CJJf4jddAeLnibhXtX39OmLEOKFgKP5z_cacnswMBpg'),
-            "password" => env('CAMPAY_PASSWORD', 'rTSZCxVsQh03Zg5w98b7h63w0pAJ9SXQ1z7tFDnhBa6lNLtw3qvQ-bGc8rmYui5G9ipb2DLj40aXUzRBHCmomw')
+            "username" => config('app.campay_username'),
+            "password" => config('app.campay_password'),
         ];
 
         $options = [
