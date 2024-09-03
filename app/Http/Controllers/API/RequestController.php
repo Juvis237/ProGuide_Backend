@@ -186,6 +186,7 @@ class RequestController extends Controller
             'delivrable_id' => $request->delivrable_id,
             'mode_id' => $request->mode_id,
             'number' => $request->number,
+            'scan_copy' => $request->scan_copy,
             'user_data' => json_encode($request->all()),
             'date' => $request->date,
             'status' => \App\Models\Request::STATUS_PENDING,

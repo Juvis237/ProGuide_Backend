@@ -189,6 +189,10 @@ class DatabaseSeeder extends Seeder
             'name' => "Maximum Withdraw",
             'value' => "10000",
         ]);
+        Constant::create([
+            'name' => "Scan Copy",
+            'value' => "100",
+        ]);
 
 
         $this->call(LocationSeerder::class);

@@ -22,6 +22,7 @@ class RequestResource extends JsonResource
             'status' => $this->status,
             'number' => $this->number,
             'paid' => $this->paid,
+            'scan_copy' => $this->scan_copy,
             'user'=>UserResource::make($this->user),
             'delivrable' => DelivrableResource::make($this->delivrable),
             'mode'=>ModeResource::make($this->mode),
