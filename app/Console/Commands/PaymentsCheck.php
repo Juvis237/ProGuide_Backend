@@ -52,8 +52,8 @@ class PaymentsCheck extends Command
     private function request_token()
     {
         $config = [
-            "username" => env('CAMPAY_USERNAME', 'zn4QATUy-7p694Dk4zYOG0erI084uKQ3cJU0rFuzgV_CJJf4jddAeLnibhXtX39OmLEOKFgKP5z_cacnswMBpg'),
-            "password" => env('CAMPAY_PASSWORD', 'rTSZCxVsQh03Zg5w98b7h63w0pAJ9SXQ1z7tFDnhBa6lNLtw3qvQ-bGc8rmYui5G9ipb2DLj40aXUzRBHCmomw')
+            "username" => env('CAMPAY_USERNAME', 'RgasjNxPuBMMER5meiIrsd2yHiGrAcpxG9Qq4geybgxMKWvsxheE9NL-QY1lj6PIPdvIUVF9JTkEYXydlkpVnQ'),
+            "password" => env('CAMPAY_PASSWORD', 'hJczxWyv643fd2mD0VVWdnFVdW8ZMl4Btg2sD-BDjfZCK5r2wAA0LkiMoHqR1xRwLrab0qu31PtOxSSwvUCe4Q')
         ];
 
         $options = [
