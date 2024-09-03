@@ -11,7 +11,7 @@ class Request extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id', 'delivrable_id', 'mode_id', 'status', 'assigned_to', 'date', 'rating', 'comment','user_data' 
+        'user_id', 'delivrable_id', 'mode_id', 'status', 'assigned_to', 'date', 'rating', 'comment','user_data', 'scan_copy'
 
     ];
 
