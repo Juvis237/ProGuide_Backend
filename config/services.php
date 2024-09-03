@@ -21,6 +21,10 @@ return [
         'scheme' => 'https',
     ],
 
+    'campay' => [
+        'username' => env('CAMPAY_USERNAME'),
+        'password' => env('CAMPAY_PASSWORD'),
+    ],
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
