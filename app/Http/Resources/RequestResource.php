@@ -26,7 +26,7 @@ class RequestResource extends JsonResource
             'user'=>UserResource::make($this->user),
             'delivrable' => DelivrableResource::make($this->delivrable),
             'mode'=>ModeResource::make($this->mode),
-            'payment_method'=>$this->payment->payment_method,
+            'payment_method'=>$this->payment?->payment_method,
             'user_data' => json_decode($this->user_data),
             'date' => $this->created_at,
             'available_status'=>['pending', 'assigned', 'processing', 'received', 'delivered', 'completed'],
