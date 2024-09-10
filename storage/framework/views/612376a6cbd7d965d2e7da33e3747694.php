@@ -22,7 +22,7 @@
                     <td><?php echo e($mode->price); ?></td>
                     <td><?php echo e($mode->duration); ?></td>
                     <td>
-                        <a href="#" wire:click.prevent="$emitTo('admin.school.delivrable.mode.edit','load',<?php echo e($delivrable); ?>, <?php echo e($mode); ?>)" class="btn btn-default text-primary"><i class="fa fa-pen"></i> Edit</a>
+                        <a href="#" wire:click.prevent="$emitTo('admin.school.delivrable.modes.edit','load',<?php echo e($delivrable); ?>, <?php echo e($mode); ?>)" class="btn btn-default text-primary"><i class="fa fa-pen"></i> Edit</a>
                         <a href="#" wire:click.prevent="$emitTo('admin.school.delivrable.mode.delete','load',<?php echo e($mode); ?>)" class="btn btn-default text-danger"><i class="fa fa-trash"></i> Delete</a>
                     </td>
                 </tr>

@@ -54,8 +54,11 @@ class Index extends Component
             return $query;
         }
 
-        return $query->whereIn('user_id', function ($value){
-            return User::where('first_name' , 'like' , "%$value%")->orWhere('last_name' , 'like' , "%$value%")->pluck('id');
+        return $query->whereIn('user_id', function ($query) use ($value) {
+            $query->select('id') // Select the IDs
+                  ->from('users') // Specify the users table
+                  ->where('first_name', 'like', "%$value%")
+                  ->orWhere('last_name', 'like', "%$value%");
         });
     }
     public function filterStatus($query, $value){

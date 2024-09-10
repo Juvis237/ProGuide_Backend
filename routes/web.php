@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin',], function () {
         Route::get('/edit-user',  [\App\Http\Livewire\Admin\Users\Edit::class, '__invoke'])->name('edit.user');
         Route::get('/users/{user}',  [\App\Http\Livewire\Admin\Users\Detail::class, '__invoke'])->name('user.detail');
         Route::get('/requests',  [\App\Http\Livewire\Admin\Request\Index::class, '__invoke'])->name('requests');
+        Route::get('/requests/{request}',  [\App\Http\Livewire\Admin\Request\Detail::class, '__invoke'])->name('admin.request.detail');
         Route::get('/users',  [\App\Http\Livewire\Admin\Users\Index::class, '__invoke'])->name('index.user');
         Route::get('/dashboard',  [\App\Http\Livewire\Admin\Dashboard::class, '__invoke'])->name('admin.dashboard');
         Route::get('/schools',  [\App\Http\Livewire\Admin\School\Index::class, '__invoke'])->name('admin.schools');
