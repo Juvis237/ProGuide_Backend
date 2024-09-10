@@ -58,10 +58,18 @@
                     <td>{{$request->created_at->format('d M Y')}}</td>
                     <td>{{isset($request->delivrable->duration)? $request->delivrable->duration : $request->mode->duration}} Days</td>
                     <td>
-                        @if($request->status != 'assigned')
-                        <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',{{$request}})"
-                           class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
-                        @endif
+                        <div class="d-flex">
+                            <div class="button-list">
+                                <a href="{{route('admin.request.detail', $request)}}" class="btn btn-primary"><i
+                                    class="fa fa-eye"></i> </a>
+                            </div>
+                            @if($request->status != 'assigned')
+                            <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',{{$request}})"
+                               class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
+                            @endif
+                        </div>
+
+
                     </td>
                 </tr>
             @endforeach

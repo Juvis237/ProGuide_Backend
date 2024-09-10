@@ -34,6 +34,7 @@
                 <th>Delivrable</th>
                 <th>Mode</th>
                 <th>Status</th>
+                <th>Scan Copy</th>
                 <th>Assigned To</th>
                 <th>Date</th>
                 <th>Duration</th>
@@ -50,14 +51,26 @@
                     <td>
                         <div class="badge badge-success p-2"><?php echo e(ucfirst($request->status)); ?></div>
                     </td>
+                    <td>
+                        <?php echo e($request->scan_copy? 'Yes' : 'No'); ?>
+
+                    </td>
                     <td><?php echo e($request->assignedTo?->name); ?></td>
                     <td><?php echo e($request->created_at->format('d M Y')); ?></td>
                     <td><?php echo e(isset($request->delivrable->duration)? $request->delivrable->duration : $request->mode->duration); ?> Days</td>
                     <td>
-                        <?php if($request->status != 'assigned'): ?>
-                        <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',<?php echo e($request); ?>)"
-                           class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
-                        <?php endif; ?>
+                        <div class="d-flex">
+                            <div class="button-list">
+                                <a href="<?php echo e(route('admin.request.detail', $request)); ?>" class="btn btn-primary"><i
+                                    class="fa fa-eye"></i> </a>
+                            </div>
+                            <?php if($request->status != 'assigned'): ?>
+                            <a href="#" wire:click.prevent="$emitTo('admin.request.assign','load',<?php echo e($request); ?>)"
+                               class="btn btn-default text-success"><i class="fa fa-pen"></i> Assign</a>
+                            <?php endif; ?>
+                        </div>
+
+
                     </td>
                 </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
