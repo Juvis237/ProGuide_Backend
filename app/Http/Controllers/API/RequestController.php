@@ -93,7 +93,7 @@ class RequestController extends Controller
         if($this->user->isAgent()){
             $req = UserRequest::where('assigned_to', $this->user->id);
         }else {
-            $req = $this->user->requests();
+            $req = $this->user->requests()->where('paid', true);
         }
         
         if ($request->status) {
@@ -186,7 +186,7 @@ class RequestController extends Controller
             'delivrable_id' => $request->delivrable_id,
             'mode_id' => $request->mode_id,
             'number' => $request->number,
-            'scan_copy' => $request->scan_copy,
+            'scan_copy' => $request->scan_copy??false,
             'user_data' => json_encode($request->all()),
             'date' => $request->date,
             'status' => \App\Models\Request::STATUS_PENDING,

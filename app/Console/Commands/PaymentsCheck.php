@@ -79,9 +79,8 @@ class PaymentsCheck extends Command
         if($status == 'SUCCESSFUL'){
             if($payment){
                 $payment->status = 'successful';
-                $payment->request?->update([
-                    'paid' => true,
-                ]);
+                $payment->request->paid = true;
+                $payment->request->save();
                 $payment->save();
                 if(!$payment->user->referal_paid){
                     if(!$payment->user->referer->wallet()){

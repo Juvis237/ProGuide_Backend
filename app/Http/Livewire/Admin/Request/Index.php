@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Request;
 
 use App\Http\Livewire\DataTable\DataTable;
 use App\Models\Request;
+use App\Models\User;
 use Livewire\Component;
 
 class Index extends Component
@@ -19,7 +20,7 @@ class Index extends Component
 
     protected function getBaseQuery()
     {
-        return Request::query()->select('requests.*');
+        return Request::query()->select('requests.*')->where('paid', 1);
     }
 
     public function resetFilters()
@@ -53,7 +54,9 @@ class Index extends Component
             return $query;
         }
 
-        return $query->where('name', 'like', "%$value%");
+        return $query->whereIn('user_id', function ($value){
+            return User::where('first_name' , 'like' , "%$value%")->orWhere('last_name' , 'like' , "%$value%")->pluck('id');
+        });
     }
     public function filterStatus($query, $value){
         if (strlen($value) === 0) {
