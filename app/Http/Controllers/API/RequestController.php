@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Request as UserRequest;
 use App\Models\School;
 use App\Notifications\SendMail;
+use App\Models\ApplicationDocument; 
 
 class RequestController extends Controller
 {
@@ -182,7 +183,8 @@ class RequestController extends Controller
 
 
         $req = \App\Models\Request::create([
-            'user_id' => $this->user->id,
+            // 'user_id' => $this->user->id,
+            'user_id' => $request->user_id,
             'delivrable_id' => $request->delivrable_id,
             'mode_id' => $request->mode_id,
             'number' => $request->number,
@@ -192,6 +194,18 @@ class RequestController extends Controller
             'status' => \App\Models\Request::STATUS_PENDING,
         ]);
 
+        if ($request->documents && $request->document_names) {
+            foreach ($request->documents as $key => $document) {
+                if (isset($request->document_names[$key])) {
+                    $documentPath = $document->store('documents'); 
+
+                    $req->documents()->create([
+                        'document_path' => $documentPath,
+                        'doc_name' => $request->document_names[$key],
+                    ]);
+                }
+            }
+        }
 
         return response([
             'success' => true,

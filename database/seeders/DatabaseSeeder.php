@@ -189,7 +189,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        $this->call(LocationSeerder::class);
+        //$this->call(LocationSeerder::class);
 
     }
 }

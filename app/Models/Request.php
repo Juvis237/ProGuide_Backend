@@ -37,6 +37,10 @@ class Request extends Model
         return $this->morphMany(Images::class, 'imageable');
     }
 
+    public function documents(){
+        return $this->morphMany(ApplicationDocument::class, 'documentable');
+    }
+
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }

@@ -31,6 +31,7 @@ class RequestResource extends JsonResource
             'date' => $this->created_at,
             'available_status'=>['pending', 'assigned', 'processing', 'received', 'delivered', 'completed'],
             'time' => $this->date,
+            'documents' => DocumentResource::collection($this->documents),
         ];
     }
 }
