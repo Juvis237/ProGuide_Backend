@@ -31,9 +31,10 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
-    'campay_username' => env('CAMPAY_USERNAME', "RgasjNxPuBMMER5meiIrsd2yHiGrAcpxG9Qq4geybgxMKWvsxheE9NL-QY1lj6PIPdvIUVF9JTkEYXydlkpVnQ"), 
+    'campay_username' => env('CAMPAY_USERNAME', "RgasjNxPuBMMER5meiIrsd2yHiGrAcpxG9Qq4geybgxMKWvsxheE9NL-QY1lj6PIPdvIUVF9JTkEYXydlkpVnQ"),
     'campay_password' => env('CAMPAY_PASSWORD', "hJczxWyv643fd2mD0VVWdnFVdW8ZMl4Btg2sD-BDjfZCK5r2wAA0LkiMoHqR1xRwLrab0qu31PtOxSSwvUCe4Q"),
-
+    'fapshi_api_key' => env('FAPSHI_API_KEY'),
+    'fapshi_api_user' => env('FAPSHI_API_USER'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
