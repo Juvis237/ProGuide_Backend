@@ -47,7 +47,7 @@ class PaymentsCheck extends Command
 
     //     $this->token = $this->request_token();
     // }
-    public function start($base_url = "https://sandbox.fapshi.com/")
+    public function start($base_url = "https://live.fapshi.com/")
     {
         $this->client = new Client([
             'base_uri' => $base_url,

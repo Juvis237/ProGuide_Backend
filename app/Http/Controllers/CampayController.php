@@ -18,7 +18,7 @@ class CampayController extends Controller
     private Client $client;
     public User $user;
 
-    public function __construct($base_url = "https://sandbox.fapshi.com/")
+    public function __construct($base_url = "https://live.fapshi.com/")
     {
         $this->user = Auth::guard('api')?->user();
         $this->client = new Client([
@@ -76,8 +76,8 @@ class CampayController extends Controller
         $validated = Validator::make($request->all(), [
             'request_id' => 'required',
             'amount' => 'required|numeric|min:100',
-            'from' => 'required|string|regex:/^6\d{8}$/',
-            'payment_method' => 'nullable|string|in:mobile money,orange money',
+            'from' => 'required',
+            'payment_method' => 'nullable',
             'message' => 'nullable|string|max:255'
         ]);
 
@@ -86,7 +86,7 @@ class CampayController extends Controller
         }
 
         $data = $data = [
-            'amount' => $request->amount,
+            'amount' => intval($request->amount),
             'phone' => $request->from,
             'userId' => $this->user->id,
             'message' => $request->message ?? 'Payment for ' . $request->request_id,  // Changed from request_id
@@ -95,7 +95,6 @@ class CampayController extends Controller
         ];;
 
         // $data['token'] = $this->token; // Add token to the data array
-
         $uri = "direct-pay/";
         $response = $this->client->post($uri, [
             "json" => $data,
@@ -111,7 +110,7 @@ class CampayController extends Controller
         $payment = new Payment();
         $payment->request_id = $request->request_id;
         $payment->user_id = $this->user->id; //Auth::id();
-        $payment->amount = $data['amount'];
+        $payment->amount = $request->amount;
         $payment->description = $request->request_id;
         $payment->transaction_id = $reference;
         $payment->payment_method = $data['medium'] ?? null;
